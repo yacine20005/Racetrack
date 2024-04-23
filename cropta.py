@@ -23,8 +23,6 @@ def conversion(fichier):
         readlines = [ligne.rstrip() for ligne in fichier.readlines()]
         len_y = len(readlines)
         len_x = len(readlines[0])
-        print(len(readlines))
-        print(len(readlines[0]))
         grille=creer_grille(len_y, len_x)
         for y in range(len(readlines)):
             for x in range(len(readlines[0])):
@@ -34,6 +32,6 @@ def conversion(fichier):
                     grille[y][x]="A"
                 if readlines[y][x] == "*":
                     grille[y][x]="D"
-        afficher_grille(grille)
+    return grille 
 
-conversion("map_test.txt")
+afficher_grille(conversion("map_mini.txt"))
