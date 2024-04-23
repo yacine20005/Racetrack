@@ -1,25 +1,24 @@
 import fltk
 import sys
+import cropta
 
 def affichage_plateau(plateau):
     hauteur_case = fltk.hauteur_fenetre() // len(plateau) 
     largeur_case = fltk.largeur_fenetre() // len(plateau[0])
-    print(fltk.hauteur_fenetre())
     for y in range(len(plateau)):
         for x in range(len(plateau[y])):
             coordcaseX = x * largeur_case
             coordcaseY = y * hauteur_case
             if plateau[y][x]=='H':
                 fltk.cercle(coordcaseX, coordcaseY,
-                    60 ,"green", "green")
+                    hauteur_case * 0.75 ,"green", "green")
+            if plateau[y][x]=='D':
+                fltk.cercle(coordcaseX, coordcaseY,
+                    hauteur_case * 0.7 ,"red", "red")
             if plateau[y][x]=='A':
                 fltk.cercle(coordcaseX, coordcaseY,
-                    50 ,"gray", "gray")
-            #elif plateau[y][x]=='R':
-                #fltk.rectangle(coordcaseX, coordcaseY,
-                    #coordcaseX + largeur_case,
-                    #coordcaseY + hauteur_case, "white", "white")
-    fltk.mise_a_jour
+                    hauteur_case * 0.625 ,"gray", "gray")
+    fltk.mise_a_jour()
 
 def affichage(plateau):
     hauteur_case = fltk.hauteur_fenetre() // len(plateau) 
@@ -36,17 +35,7 @@ def affichage(plateau):
                 coordcaseY + hauteur_case,"Black")
 
 fltk.cree_fenetre(800,800, redimension=True)
-plateau = [['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
-            ['H', 'A', 'R', 'R', 'R', 'R', 'R', 'H', 'H', 'R'],
-            ['H', 'A', 'R', 'R', 'R', 'R', 'R', 'H', 'R', 'R'],
-            ['H', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'H', 'H', 'H', 'H', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'H', 'H', 'H', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'H', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'D', 'D', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'D', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['H', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'],
-            ['R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R']]
+plateau = cropta.conversion("map1.txt")
 
 while True:
     event = fltk.attend_ev()
