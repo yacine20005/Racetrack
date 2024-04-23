@@ -18,7 +18,7 @@ def afficher_grille(grille):
         print(ligne)
 
 
-def convertion(fichier):
+def conversion(fichier):
     with open(f"maps-texte/{fichier}") as fichier:
         readlines = [ligne.rstrip() for ligne in fichier.readlines()]
         len_y = len(readlines)
@@ -36,4 +36,4 @@ def convertion(fichier):
                     grille[y][x]="D"
         afficher_grille(grille)
 
-convertion("map_test.txt")
+conversion("map_test.txt")
