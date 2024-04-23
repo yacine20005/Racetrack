@@ -1,3 +1,5 @@
+import fltk
+
 # R = route
 # H = herbe
 # A = arrivée
@@ -18,7 +20,7 @@ def afficher_grille(grille):
         print(ligne)
 
 
-def conversion(fichier):
+def conversion_txt(fichier):
     with open(f"maps-texte/{fichier}") as fichier:
         readlines = [ligne.rstrip() for ligne in fichier.readlines()]
         len_y = len(readlines)
@@ -28,10 +30,33 @@ def conversion(fichier):
             for x in range(len(readlines[0])):
                 if readlines[y][x] == "#":
                     grille[y][x]="H"
-                if readlines[y][x] == ">":
+                elif readlines[y][x] == ">":
                     grille[y][x]="A"
-                if readlines[y][x] == "*":
+                elif readlines[y][x] == "*":
                     grille[y][x]="D"
     return grille 
 
-afficher_grille(conversion("map_mini.txt"))
+def conversion_img(fichier, maillage):
+    fltk.cree_fenetre(800,800, redimension=True)
+    image = fltk.PhotoImage(file = f"maps-image/{fichier}")
+    grille = creer_grille(maillage, maillage)
+    largeur = image.width()
+    hauteur = image.height()
+    pas_x = largeur // maillage
+    pas_y = hauteur // maillage
+    x = -1
+    y = -1
+    for coord_y in range(0, hauteur, pas_y):
+        y += 1
+        for coord_x in range(0, largeur, pas_x):
+            x += 1
+            if image.get(coord_x, coord_y) == (0, 128, 128):
+                grille[y][x] = "D"
+            elif image.get(coord_x, coord_y) == (128, 128, 128):
+                grille[y][x] = "A"
+            elif image.get(coord_x, coord_y) not in [(0, 128, 128), (128, 128, 128), (255, 255, 255)]:
+                grille[y][x] = "H"
+
+conversion_img("map_test.png", 40)
+
+#Bug map3.txt
