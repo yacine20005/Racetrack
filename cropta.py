@@ -5,12 +5,15 @@ import fltk
 # A = arrivée
 # D = départ
 
+
+list_add = lambda a, b: [a[i]+b[i] for i in range(len(a))]
+
 def creer_grille(x, y):
     grille = []
     for _ in range(y):
         ligne = []
         for _ in range(x):
-            ligne.append("R")
+            ligne.append(0)
         grille.append(ligne)
     return grille
 
@@ -30,10 +33,12 @@ def conversion_txt(fichier):
             for x in range(len(readlines[0])):
                 if readlines[y][x] == "#":
                     grille[y][x]="H"
-                elif readlines[y][x] == ">":
-                    grille[y][x]="A"
                 elif readlines[y][x] == "*":
+                    grille[y][x]="A"
+                elif readlines[y][x] == ">":
                     grille[y][x]="D"
+                else:
+                    grille[y][x]="R"
     return grille 
 
 def conversion_img(fichier, maillage):
@@ -57,6 +62,47 @@ def conversion_img(fichier, maillage):
             elif image.get(coord_x, coord_y) not in [(0, 128, 128), (128, 128, 128), (255, 255, 255)]:
                 grille[y][x] = "H"
 
-conversion_img("map_test.png", 40)
+def miseenplacepion(plateau):
+        len_y = len(plateau)
+        len_x = len(plateau[0])
+        listeposX = []
+        listeposY = []
+        posfinalX, posfinalY = 0,0
+        grille = creer_grille(len_y, len_x)
+        for y in range(len(plateau)):
+            for x in range(len(plateau[0])):
+                if plateau[y][x] == "D":
+                    listeposX.append(x)
+                    listeposY.append(y)
+        posfinalX = (max(listeposX) + min(listeposX)) // 2
+        posfinalY = (max(listeposY) + min(listeposY)) // 2
+        grille[posfinalY][posfinalX] = 1
+        return grille
+                   
+def calcul_posibilite(plateau, plateaupion):
+    possibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
+    mvtpossible = []
+    for y in range(len(plateau)):
+        for x in range(len(plateau[y])):
+            if plateaupion[y][x] == 1:
+                pospion = [x,y]
+    for pos in possibilite:
+        posacheck = list_add(pospion, pos)
+        if plateau[posacheck[1]][posacheck[0]] not in 'H' :
+            mvtpossible.append(posacheck)
+    return pospion, mvtpossible
 
+def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle):
+    hauteur_case = fltk.hauteur_fenetre() / len(plateau_pion) 
+    largeur_case = fltk.largeur_fenetre() / len(plateau_pion[0])
+    Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
+    for pos in mvtpossible:
+        if Xclick in range(int(pos[1] * largeur_case), int(pos[1] * largeur_case + largeur_case//2)):
+            if Yclick in range(int(pos[0] * hauteur_case), int(pos[0] * hauteur_case+  hauteur_case//2)):
+                Xcaseclick = int(Xclick // largeur_case)
+                Ycaseclick = int(Yclick // hauteur_case)
+                plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
+                plateau_pion[Ycaseclick][Xcaseclick] = 1
+                return plateau_pion
+            
 #Bug map3.txt
