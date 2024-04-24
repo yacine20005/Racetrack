@@ -92,17 +92,17 @@ def calcul_posibilite(plateau, plateaupion):
             mvtpossible.append(posacheck)
     return pospion, mvtpossible
 
-def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle):
+def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau_pion) 
     largeur_case = fltk.largeur_fenetre() / len(plateau_pion[0])
     Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
     for pos in mvtpossible:
-        if Xclick in range(int(pos[1] * largeur_case), int(pos[1] * largeur_case + largeur_case//2)):
-            if Yclick in range(int(pos[0] * hauteur_case), int(pos[0] * hauteur_case+  hauteur_case//2)):
+        if (Xclick in range(int(pos[0] * largeur_case - largeur_case//4), int(pos[0] * largeur_case + largeur_case//4)) 
+            and Yclick in range(int(pos[1] * hauteur_case - hauteur_case//4), int(pos[1] * hauteur_case+  hauteur_case//4))):
                 Xcaseclick = int(Xclick // largeur_case)
                 Ycaseclick = int(Yclick // hauteur_case)
                 plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
                 plateau_pion[Ycaseclick][Xcaseclick] = 1
-                return plateau_pion
+                pos_parcouru.append((Xcaseclick,Ycaseclick))
             
 #Bug map3.txt
