@@ -7,6 +7,7 @@ import fltk
 
 
 list_add = lambda a, b: [a[i]+b[i] for i in range(len(a))]
+list_add2 = lambda a, b: [a[i]-b[i] for i in range(len(a))]
 
 def creer_grille(x, y):
     grille = []
@@ -39,6 +40,8 @@ def conversion_txt(fichier):
                     grille[y][x]="D"
                 else:
                     grille[y][x]="R"
+
+
     return grille 
 
 def conversion_img(fichier, maillage):
@@ -61,6 +64,8 @@ def conversion_img(fichier, maillage):
                 grille[y][x] = "A"
             elif image.get(coord_x, coord_y) not in [(0, 128, 128), (128, 128, 128), (255, 255, 255)]:
                 grille[y][x] = "H"
+            else:
+                grille[y][x] = "H"
 
 def miseenplacepion(plateau):
         len_y = len(plateau)
@@ -78,27 +83,37 @@ def miseenplacepion(plateau):
         posfinalY = (max(listeposY) + min(listeposY)) // 2
         grille[posfinalY][posfinalX] = 1
         return grille
-                   
-def calcul_posibilite(plateau, plateaupion):
-    possibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
-    mvtpossible = []
-    for y in range(len(plateau)):
-        for x in range(len(plateau[y])):
+
+def posactuelle(plateaupion):
+    for y in range(len(plateaupion)):
+        for x in range(len(plateaupion[y])):
             if plateaupion[y][x] == 1:
                 pospion = [x,y]
-    for pos in possibilite:
-        posacheck = list_add(pospion, pos)
-        if plateau[posacheck[1]][posacheck[0]] not in 'H' :
+    return pospion
+
+def calcul_posibilite(plateau, pospion, posparcouru):
+    voisinpossibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
+    mvtpossible = []
+    if len(posparcouru) == 1:
+        pospotentielle = pospion
+    else:
+        distanceprecedent = list_add2(pospion, posparcouru[-2])
+        print(distanceprecedent)
+        pospotentielle = list_add(pospion, distanceprecedent)
+        print(pospotentielle)
+    for pos in voisinpossibilite:
+        posacheck = list_add(pospotentielle, pos)
+        if posacheck[1] < len(plateau) and posacheck[1] < len(plateau) and plateau[posacheck[1]][posacheck[0]] not in 'H' :
             mvtpossible.append(posacheck)
-    return pospion, mvtpossible
+    return mvtpossible
 
 def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau_pion) 
     largeur_case = fltk.largeur_fenetre() / len(plateau_pion[0])
     Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
     for pos in mvtpossible:
-        if (Xclick in range(int(pos[0] * largeur_case - largeur_case//4), int(pos[0] * largeur_case + largeur_case//4)) 
-            and Yclick in range(int(pos[1] * hauteur_case - hauteur_case//4), int(pos[1] * hauteur_case+  hauteur_case//4))):
+        if Xclick in range(int(pos[0] * largeur_case - largeur_case//4), int(pos[0] * largeur_case + largeur_case//4)):
+            if Yclick in range(int(pos[1] * hauteur_case - hauteur_case//4), int(pos[1] * hauteur_case+  hauteur_case//4)):
                 Xcaseclick = int(Xclick // largeur_case)
                 Ycaseclick = int(Yclick // hauteur_case)
                 plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0

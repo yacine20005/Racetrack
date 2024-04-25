@@ -23,10 +23,10 @@ def affichage_plateau(plateau):
                     hauteur_case * 0.75 ,"green", "green") #anciennement 1,2
             elif plateau[y][x]=='A':
                 fltk.cercle(coordcaseX, coordcaseY,
-                    hauteur_case * 0.71 ,"red", "red")
+                    hauteur_case * 0.75 ,"red", "red")
             elif plateau[y][x]=='D':
                 fltk.cercle(coordcaseX, coordcaseY,
-                    hauteur_case * 0.71 ,"gray", "gray")
+                    hauteur_case * 0.75 ,"gray", "gray")
                 
 def affichage_trait(plateau):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
@@ -59,30 +59,32 @@ def affiche_trace(posparcouru, plateau):
     for i in range(len(posparcouru)-1):
         x, y = posparcouru[i][0] * largeur_case, posparcouru[i][1] * hauteur_case
         x2, y2 = posparcouru[i+1][0] * largeur_case, posparcouru[i+1][1] * hauteur_case
-        fltk.ligne(x, y, x2, y2, "pink", 5)
+        fltk.ligne(x, y, x2, y2, "pink", 3)
 
-def affiche_tout(plateau, plateaupion, mvtpossible, pos_actuelle, posparcouru):
+def affiche_tout(plateau, mvtpossible, posparcouru):
+    pos_actuelle = cropta.posactuelle(plateau_pion)
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)
-    affichage_voiture(plateaupion, pos_actuelle)
     affiche_possibilite(plateau, mvtpossible)
+    affichage_voiture(plateau, pos_actuelle)
     affiche_trace(posparcouru, plateau)
 
 fltk.cree_fenetre(800,800, redimension=True)
-plateau = cropta.conversion_txt("map2.txt")
+plateau = cropta.conversion_txt("map_mini.txt")
 plateau_pion = cropta.miseenplacepion(plateau)
-pos_actuelle, mvtpossible = cropta.calcul_posibilite(plateau, plateau_pion)
+pos_actuelle = cropta.posactuelle(plateau_pion)
 pos_parcouru = [pos_actuelle]
-affiche_tout(plateau, plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
+mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
+affiche_tout(plateau, mvtpossible, pos_parcouru)
 
 while True:
     event = fltk.attend_ev()
     tev = fltk.type_ev(event)
     if tev == "ClicGauche":
-        pos_actuelle, mvtpossible = cropta.calcul_posibilite(plateau, plateau_pion)
+        mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
         cropta.gerer_evenement(event,plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
-        affiche_tout(plateau, plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
+        affiche_tout(plateau, mvtpossible, pos_parcouru)
         print(pos_parcouru)
     if tev == "Redimension":
         affiche_tout(plateau, plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
