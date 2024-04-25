@@ -112,10 +112,15 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
     Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
     Xcaseclick = int((Xclick+largeur_case//2) // largeur_case)
     Ycaseclick = int((Yclick+hauteur_case//2) // hauteur_case)
-    print(Xcaseclick,Ycaseclick)
     if [Xcaseclick, Ycaseclick] in mvtpossible:
         plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
         plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
         
-#Bug map3.txt
+def victoire(plateau_pion, plateau):
+    pos = posactuelle(plateau_pion)
+    print(pos)
+    print(plateau_pion[pos[1]][pos[0]])
+    if plateau[pos[1]][pos[0]] == 'A':
+        return True
+    return False

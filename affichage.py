@@ -78,7 +78,7 @@ pos_parcouru = [pos_actuelle]
 mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
 affiche_tout(plateau, mvtpossible, pos_parcouru)
 
-while True:
+while cropta.victoire(plateau_pion, plateau) is False:
     event = fltk.attend_ev()
     tev = fltk.type_ev(event)
     if tev == "ClicGauche":
