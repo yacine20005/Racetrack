@@ -62,7 +62,7 @@ def affiche_trace(posparcouru, plateau):
         fltk.ligne(x, y, x2, y2, "pink", 3)
 
 def affiche_tout(plateau, mvtpossible, posparcouru):
-    pos_actuelle = cropta.posactuelle(plateau_pion)
+    pos_actuelle = cropta.posactuelle(pos_parcouru)
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)
@@ -72,19 +72,29 @@ def affiche_tout(plateau, mvtpossible, posparcouru):
 
 fltk.cree_fenetre(800,800, redimension=True)
 plateau = cropta.conversion_txt("map_mini.txt")
-plateau_pion = cropta.miseenplacepion(plateau)
-pos_actuelle = cropta.posactuelle(plateau_pion)
-pos_parcouru = [pos_actuelle]
+plateau_pion, posdepart = cropta.miseenplacepion(plateau)
+pos_parcouru = [posdepart]
+pos_actuelle = cropta.posactuelle(pos_parcouru)
 mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
 affiche_tout(plateau, mvtpossible, pos_parcouru)
 
-while cropta.victoire(plateau_pion, plateau) is False:
+while cropta.victoire(pos_parcouru, plateau) is False:
     event = fltk.attend_ev()
     tev = fltk.type_ev(event)
     if tev == "ClicGauche":
         cropta.gerer_evenement(event,plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
-        pos_actuelle = cropta.posactuelle(plateau_pion)
+        pos_actuelle = cropta.posactuelle(pos_parcouru)
         mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
+        affiche_tout(plateau, mvtpossible, pos_parcouru)
+    if tev == "Touche":
+        nom_touche = fltk.touche(event)
+        if nom_touche == "Left":
+            print("retour arriere")
+            print(pos_parcouru)
+            pos_parcouru = cropta.retour_arriere(pos_parcouru)
+            print(pos_parcouru)
+            pos_actuelle = cropta.posactuelle(pos_parcouru)
+            mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
         affiche_tout(plateau, mvtpossible, pos_parcouru)
     if tev == "Redimension":
         affiche_tout(plateau, mvtpossible, pos_parcouru)

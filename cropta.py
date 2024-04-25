@@ -82,14 +82,11 @@ def miseenplacepion(plateau):
         posfinalX = (max(listeposX) + min(listeposX)) // 2
         posfinalY = (max(listeposY) + min(listeposY)) // 2
         grille[posfinalY][posfinalX] = 1
-        return grille
+        posdepart = [posfinalX,posfinalY]
+        return grille, posdepart
 
-def posactuelle(plateaupion):
-    for y in range(len(plateaupion)):
-        for x in range(len(plateaupion[y])):
-            if plateaupion[y][x] == 1:
-                pospion = [x,y]
-    return pospion
+def posactuelle(pos_parcouru):
+    return pos_parcouru[-1]
 
 def calcul_posibilite(plateau, pospion, posparcouru):
     voisinpossibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
@@ -116,11 +113,13 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
         plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
         plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
-        
-def victoire(plateau_pion, plateau):
-    pos = posactuelle(plateau_pion)
-    print(pos)
-    print(plateau_pion[pos[1]][pos[0]])
+
+def retour_arriere(posparcouru):
+    posparcouru.pop()
+    return posparcouru
+
+def victoire(posparcouru, plateau):
+    pos = posactuelle(posparcouru)
     if plateau[pos[1]][pos[0]] == 'A':
         return True
     return False
