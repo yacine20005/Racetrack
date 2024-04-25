@@ -4,7 +4,7 @@ import affichage
 import sys
 
 fltk.cree_fenetre(800,800, redimension=True)
-plateau = moteur.conversion_txt("map2.txt")
+plateau = moteur.conversion_txt("map_mini.txt")
 plateau_pion, posdepart = moteur.miseenplacepion(plateau)
 pos_parcouru = [posdepart]
 pos_actuelle = moteur.posactuelle(pos_parcouru)

@@ -55,7 +55,7 @@ def affiche_possibilite(plateau, mvtpossible):
 def affiche_trace(posparcouru, plateau):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
     largeur_case = fltk.largeur_fenetre() / len(plateau[0])
-    couleurs = {1: "#00BCD4", 2: "#1976D2", 3: "#0D47A1", 4: "#4CAF50",5: 
+    couleurs = {0: "light gray", 1: "#00BCD4", 2: "#1976D2", 3: "#0D47A1", 4: "#4CAF50",5: 
     "#8BC34A",6: "#FFEB3B",7: "#FF9800", 8: "#FF5722",9: "#F44336", 10: "#B71C1C"} 
     for i in range(len(posparcouru)-1):
         x, y = posparcouru[i][0] * largeur_case, posparcouru[i][1] * hauteur_case
