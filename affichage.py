@@ -1,6 +1,5 @@
 import fltk
-import sys
-import cropta
+import moteur
 
 def affichage_voiture(plateau, pos_actuelle):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
@@ -56,47 +55,20 @@ def affiche_possibilite(plateau, mvtpossible):
 def affiche_trace(posparcouru, plateau):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
     largeur_case = fltk.largeur_fenetre() / len(plateau[0])
+    couleurs = {1: "#00BCD4", 2: "#1976D2", 3: "#0D47A1", 4: "#4CAF50",5: 
+    "#8BC34A",6: "#FFEB3B",7: "#FF9800", 8: "#FF5722",9: "#F44336", 10: "#B71C1C"} 
     for i in range(len(posparcouru)-1):
         x, y = posparcouru[i][0] * largeur_case, posparcouru[i][1] * hauteur_case
         x2, y2 = posparcouru[i+1][0] * largeur_case, posparcouru[i+1][1] * hauteur_case
-        fltk.ligne(x, y, x2, y2, "pink", 3)
+        variable = max(moteur.list_add2([posparcouru[i+1][0],posparcouru[i+1][1]],[posparcouru[i][0],posparcouru[i][1]]))
+        couleur = couleurs[variable]
+        fltk.ligne(x, y, x2, y2, couleur, 3)
 
 def affiche_tout(plateau, mvtpossible, posparcouru):
-    pos_actuelle = cropta.posactuelle(pos_parcouru)
+    pos_actuelle = moteur.posactuelle(posparcouru)
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)
     affiche_possibilite(plateau, mvtpossible)
     affichage_voiture(plateau, pos_actuelle)
     affiche_trace(posparcouru, plateau)
-
-fltk.cree_fenetre(800,800, redimension=True)
-plateau = cropta.conversion_txt("map_mini.txt")
-plateau_pion, posdepart = cropta.miseenplacepion(plateau)
-pos_parcouru = [posdepart]
-pos_actuelle = cropta.posactuelle(pos_parcouru)
-mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
-affiche_tout(plateau, mvtpossible, pos_parcouru)
-
-while cropta.victoire(pos_parcouru, plateau) is False:
-    event = fltk.attend_ev()
-    tev = fltk.type_ev(event)
-    if tev == "ClicGauche":
-        cropta.gerer_evenement(event,plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
-        pos_actuelle = cropta.posactuelle(pos_parcouru)
-        mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
-        affiche_tout(plateau, mvtpossible, pos_parcouru)
-    if tev == "Touche":
-        nom_touche = fltk.touche(event)
-        if nom_touche == "Left":
-            print("retour arriere")
-            print(pos_parcouru)
-            pos_parcouru = cropta.retour_arriere(pos_parcouru)
-            print(pos_parcouru)
-            pos_actuelle = cropta.posactuelle(pos_parcouru)
-            mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
-        affiche_tout(plateau, mvtpossible, pos_parcouru)
-    if tev == "Redimension":
-        affiche_tout(plateau, mvtpossible, pos_parcouru)
-    if tev == "Quitte":
-        sys.exit()

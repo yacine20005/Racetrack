@@ -96,10 +96,11 @@ def calcul_posibilite(plateau, pospion, posparcouru):
     else:
         distanceprecedent = list_add2(pospion, posparcouru[-2])
         pospotentielle = list_add(pospion, distanceprecedent)
-        mvtpossible.append(pospotentielle)
+        if pospotentielle[1] < len(plateau) and pospotentielle[0] < len(plateau) and plateau[pospotentielle[1]][pospotentielle[0]] != "H" :
+            mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
         posacheck = list_add(pospotentielle, pos)
-        if posacheck[1] < len(plateau) and posacheck[1] < len(plateau) and plateau[posacheck[1]][posacheck[0]] != 'H' :
+        if posacheck[1] < len(plateau) and posacheck[0] < len(plateau) and plateau[posacheck[1]][posacheck[0]] != "H" :
             mvtpossible.append(posacheck)
     return mvtpossible
 
@@ -121,5 +122,11 @@ def retour_arriere(posparcouru):
 def victoire(posparcouru, plateau):
     pos = posactuelle(posparcouru)
     if plateau[pos[1]][pos[0]] == 'A':
+        return True
+    return False
+
+def defaite(mvtpossible):
+    if len(mvtpossible) < 1:
+        print("perdu")
         return True
     return False
