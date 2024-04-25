@@ -82,11 +82,11 @@ while True:
     event = fltk.attend_ev()
     tev = fltk.type_ev(event)
     if tev == "ClicGauche":
-        mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
         cropta.gerer_evenement(event,plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
+        pos_actuelle = cropta.posactuelle(plateau_pion)
+        mvtpossible = cropta.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
         affiche_tout(plateau, mvtpossible, pos_parcouru)
-        print(pos_parcouru)
     if tev == "Redimension":
-        affiche_tout(plateau, plateau_pion, mvtpossible, pos_actuelle, pos_parcouru)
+        affiche_tout(plateau, mvtpossible, pos_parcouru)
     if tev == "Quitte":
         sys.exit()

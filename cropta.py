@@ -94,16 +94,15 @@ def posactuelle(plateaupion):
 def calcul_posibilite(plateau, pospion, posparcouru):
     voisinpossibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
     mvtpossible = []
-    if len(posparcouru) == 1:
+    if len(posparcouru) <= 1:
         pospotentielle = pospion
     else:
         distanceprecedent = list_add2(pospion, posparcouru[-2])
-        print(distanceprecedent)
         pospotentielle = list_add(pospion, distanceprecedent)
-        print(pospotentielle)
+        mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
         posacheck = list_add(pospotentielle, pos)
-        if posacheck[1] < len(plateau) and posacheck[1] < len(plateau) and plateau[posacheck[1]][posacheck[0]] not in 'H' :
+        if posacheck[1] < len(plateau) and posacheck[1] < len(plateau) and plateau[posacheck[1]][posacheck[0]] != 'H' :
             mvtpossible.append(posacheck)
     return mvtpossible
 
@@ -111,13 +110,12 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau_pion) 
     largeur_case = fltk.largeur_fenetre() / len(plateau_pion[0])
     Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
-    for pos in mvtpossible:
-        if Xclick in range(int(pos[0] * largeur_case - largeur_case//4), int(pos[0] * largeur_case + largeur_case//4)):
-            if Yclick in range(int(pos[1] * hauteur_case - hauteur_case//4), int(pos[1] * hauteur_case+  hauteur_case//4)):
-                Xcaseclick = int(Xclick // largeur_case)
-                Ycaseclick = int(Yclick // hauteur_case)
-                plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
-                plateau_pion[Ycaseclick][Xcaseclick] = 1
-                pos_parcouru.append((Xcaseclick,Ycaseclick))
-            
+    Xcaseclick = int((Xclick+largeur_case//2) // largeur_case)
+    Ycaseclick = int((Yclick+hauteur_case//2) // hauteur_case)
+    print(Xcaseclick,Ycaseclick)
+    if [Xcaseclick, Ycaseclick] in mvtpossible:
+        plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
+        plateau_pion[Ycaseclick][Xcaseclick] = 1
+        pos_parcouru.append([Xcaseclick, Ycaseclick])
+        
 #Bug map3.txt
