@@ -1,6 +1,33 @@
 import fltk
 import moteur
 
+def affiche_boutons(liste_boutons, taille_texte):
+    """S'occupe d'afficher les boutons dans la fenetre fltk
+
+    Args:
+        liste_boutons (_list_): liste de liste contenant la liste
+        de tous les boutons utilisés dans le jeu
+
+        taille_boutons (_int_): Variable correspondant a la taille
+        du coté des boutons en fonction de la taille de la fenetre fltk.
+
+        epaisseur_bouton (_int_): Variable correspondant a l'épaisseur
+        du coté des boutons en fonction de la taille de la fenetre fltk.
+    """
+    fltk.efface_tout()
+    for boutons in liste_boutons:
+        aX, aY = boutons[0], boutons[1]
+        bX, bY = boutons[2], boutons[3]
+        texte = boutons[4]
+        fltk.rectangle(aX, aY, bX, bY,
+                        couleur="dark grey")
+        fltk.texte((aX + bX) // 2, (aY + bY) // 2,
+                   texte, ancrage="center", taille=taille_texte)
+        
+def affichage_fond_ecran():
+     pass
+
+
 def affichage_voiture(plateau, pos_actuelle):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
     largeur_case = fltk.largeur_fenetre() / len(plateau[0])
@@ -19,7 +46,7 @@ def affichage_plateau(plateau):
             coordcaseY = y * hauteur_case
             if plateau[y][x]=='H':
                 fltk.cercle(coordcaseX, coordcaseY,
-                    hauteur_case * 0.75 ,"green", "green") #anciennement 1,2
+                    hauteur_case * 0.75 ,"green", "green")
             elif plateau[y][x]=='A':
                 fltk.cercle(coordcaseX, coordcaseY,
                     hauteur_case * 0.75 ,"red", "red")
@@ -72,3 +99,4 @@ def affiche_tout(plateau, mvtpossible, posparcouru):
     affiche_possibilite(plateau, mvtpossible)
     affichage_voiture(plateau, pos_actuelle)
     affiche_trace(posparcouru, plateau)
+

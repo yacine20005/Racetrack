@@ -18,6 +18,10 @@ def creer_grille(x, y):
         grille.append(ligne)
     return grille
 
+def decalagegauche(lst):
+        premier = lst.pop(0)  # Retire le premier élément et le sauvegarde
+        lst.append(premier)   # Ajoute cet élément à la fin de la liste
+        return lst
 
 def afficher_grille(grille):
     for ligne in grille:
@@ -65,7 +69,7 @@ def conversion_img(fichier, maillage):
             elif image.get(coord_x, coord_y) not in [(0, 128, 128), (128, 128, 128), (255, 255, 255)]:
                 grille[y][x] = "H"
             else:
-                grille[y][x] = "H"
+                grille[y][x] = "R"
 
 def miseenplacepion(plateau):
         len_y = len(plateau)
@@ -84,6 +88,13 @@ def miseenplacepion(plateau):
         grille[posfinalY][posfinalX] = 1
         posdepart = [posfinalX,posfinalY]
         return grille, posdepart
+
+def remiseenplace(pos_actuelle, plateau):
+    len_y = len(plateau)
+    len_x = len(plateau[0])
+    grille = creer_grille(len_y, len_x)
+    grille[pos_actuelle[1]][pos_actuelle[0]] = 1
+    return grille
 
 def posactuelle(pos_parcouru):
     return pos_parcouru[-1]
