@@ -5,7 +5,6 @@ import fltk
 # A = arrivée
 # D = départ
 
-
 list_add = lambda a, b: [a[i]+b[i] for i in range(len(a))]
 list_add2 = lambda a, b: [a[i]-b[i] for i in range(len(a))]
 
@@ -27,7 +26,6 @@ def afficher_grille(grille):
     for ligne in grille:
         print(ligne)
 
-
 def conversion_txt(fichier):
     with open(f"maps-texte/{fichier}") as fichier:
         readlines = [ligne.rstrip() for ligne in fichier.readlines()]
@@ -44,12 +42,9 @@ def conversion_txt(fichier):
                     grille[y][x]="D"
                 else:
                     grille[y][x]="R"
-
-
     return grille 
 
 def conversion_img(fichier, maillage):
-    fltk.cree_fenetre(800,800, redimension=True)
     image = fltk.PhotoImage(file = f"maps-image/{fichier}")
     grille = creer_grille(maillage, maillage)
     largeur = image.width()
@@ -60,8 +55,11 @@ def conversion_img(fichier, maillage):
     y = -1
     for coord_y in range(0, hauteur, pas_y):
         y += 1
+        x = -1 
         for coord_x in range(0, largeur, pas_x):
             x += 1
+            if y >= maillage or x >= maillage:
+                break
             if image.get(coord_x, coord_y) == (0, 128, 128):
                 grille[y][x] = "D"
             elif image.get(coord_x, coord_y) == (128, 128, 128):
@@ -70,6 +68,7 @@ def conversion_img(fichier, maillage):
                 grille[y][x] = "H"
             else:
                 grille[y][x] = "R"
+    afficher_grille(grille)
 
 def miseenplacepion(plateau):
         len_y = len(plateau)
@@ -141,3 +140,5 @@ def defaite(mvtpossible):
         print("perdu")
         return True
     return False
+
+conversion_img("map.png", 14)
