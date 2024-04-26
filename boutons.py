@@ -1,6 +1,6 @@
 import fltk
 
-def initialiseboutonsmenu(phase, map):
+def initialiseboutonsmenu(phase, map, Choix):
     MillieufenetreX = fltk.largeur_fenetre()//2
     MillieufenetreY = fltk.hauteur_fenetre()//2
     liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
@@ -37,7 +37,6 @@ def initialiseboutonsmenu(phase, map):
                                 MillieufenetreY - fltk.hauteur_fenetre()//12,
                                 MillieufenetreX + fltk.largeur_fenetre()//3, 
                                 MillieufenetreY + fltk.hauteur_fenetre()//12, map[0]],
-                         
                         [MillieufenetreX - fltk.largeur_fenetre()//6, 
                                 MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
                                 MillieufenetreX + fltk.largeur_fenetre()//6, 
@@ -51,5 +50,20 @@ def initialiseboutonsmenu(phase, map):
                                 MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
                                 MillieufenetreX + fltk.largeur_fenetre()//6, 
                                 MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "Retour"]]
+    elif phase == "Charger":
+
+        liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
+                                MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "‎Charger‎"],
+                        [MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                MillieufenetreY - fltk.hauteur_fenetre()//12,
+                                MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                MillieufenetreY + fltk.hauteur_fenetre()//12, f"Choix de la sauvegarde : {Choix}"],
+
+                        [MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
+                                MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "‎Retour‎"]]
     return liste_boutons
 

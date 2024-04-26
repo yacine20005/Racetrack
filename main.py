@@ -34,8 +34,10 @@ def main(map, charge):
                 pos_actuelle = moteur.posactuelle(pos_parcouru)
                 mvtpossible = moteur.calcul_posibilite(plateau, pos_actuelle, pos_parcouru)
                 affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
-            if nom_touche == "S":
-                pass
+            if nom_touche == "s":
+                num = moteur.choixsauvegarde()
+                moteur.sauvegarde_partie(pos_parcouru, map, num)
+
         if tev == "Redimension":
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":

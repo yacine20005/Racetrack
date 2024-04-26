@@ -141,4 +141,23 @@ def defaite(mvtpossible):
         return True
     return False
 
-conversion_img("map.png", 14)
+def sauvegarde_partie(posparcouru, map, numero):
+    print("sauvegarde en cours..")
+    chemin = f"./sauvegardes/sauvegarde_{numero}.txt"
+    sauvegarde = str([posparcouru,map])
+    with open(chemin, mode = "w") as mon_fichier:
+        mon_fichier.write(sauvegarde)
+
+def charger_fichier(fichier):
+    with open(f"sauvegardes/sauvegarde_{fichier}") as fichier:
+        readlines = fichier.readlines()
+        return eval(readlines[0])
+    
+def choixsauvegarde():
+    ev = fltk.attend_ev()
+    nom_touche = fltk.touche(ev)
+    while not nom_touche.isdigit() or not (1 <= int(nom_touche) <= 99):
+        ev = fltk.attend_ev()
+        nom_touche = fltk.touche(ev)
+    print("lets go")
+    return int(nom_touche)

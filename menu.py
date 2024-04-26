@@ -5,14 +5,14 @@ import moteur
 import affichage
 import boutons
 
-def evenement_clic_menu(event, liste_boutons, phase, map):
-     Xclick, Yclick = fltk.abscisse(event), fltk.ordonnee(event)
-     for boutons in liste_boutons:
-          if Xclick in range(boutons[0],boutons[2]) and Yclick in range(boutons[1], boutons[3]):
-               return actionboutonsmenu(boutons[4], phase, map)
+def evenement_clic_menu(event, liste_boutons, phase, map, choix):
+    Xclick, Yclick = fltk.abscisse(event), fltk.ordonnee(event)
+    for boutons in liste_boutons:
+        if Xclick in range(boutons[0],boutons[2]) and Yclick in range(boutons[1], boutons[3]):
+            return actionboutonsmenu(boutons[4], phase, map, choix)
+    return phase
           
-def actionboutonsmenu(action, phase, map):
-    print(action)
+def actionboutonsmenu(action, phase, map, choix):
     if action == "Jouer":
         phase = "Jouer"
         return phase
@@ -25,7 +25,8 @@ def actionboutonsmenu(action, phase, map):
         phase = "Choix"
         return phase
     elif action == "Charger":
-        pass
+        phase = "Charger"
+        return phase
     elif action == "Retour":
         phase = "Accueil"
         return phase
@@ -38,23 +39,28 @@ def actionboutonsmenu(action, phase, map):
     elif action == "‎Retour‎":
         phase = "Jouer"
         return phase
+    elif action == "‎Charger‎":
+        main.main(moteur.charger_fichier(choix),True)
+    elif action == f"Choix de la sauvegarde : {choix}":
+        choix = moteur.choixsauvegarde()
+        main.main(moteur.charger_fichier(choix),True)
     else:
-        pass
+        return phase
     
 
 def menu():
     map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt",]
     phase = "Accueil"
-    liste_boutons = boutons.initialiseboutonsmenu(phase, map)
+    choix = 1
+    liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
     affichage.affiche_boutons(liste_boutons, 20)
 
     while True:
             event = fltk.attend_ev()
             tev = fltk.type_ev(event)
             if tev == "ClicGauche":
-                print(phase)
-                phase = evenement_clic_menu(event, liste_boutons, phase, map)
-                liste_boutons = boutons.initialiseboutonsmenu(phase, map)
+                phase = evenement_clic_menu(event, liste_boutons, phase, map, choix)
+                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
                 affichage.affiche_boutons(liste_boutons, 20)
             if tev == "Quitte":
                 sys.exit()
