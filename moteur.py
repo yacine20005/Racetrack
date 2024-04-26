@@ -149,7 +149,7 @@ def sauvegarde_partie(posparcouru, map, numero):
         mon_fichier.write(sauvegarde)
 
 def charger_fichier(fichier):
-    with open(f"sauvegardes/sauvegarde_{fichier}") as fichier:
+    with open(f"./sauvegardes/sauvegarde_{fichier}.txt") as fichier:
         readlines = fichier.readlines()
         return eval(readlines[0])
     
