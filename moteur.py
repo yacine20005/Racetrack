@@ -34,7 +34,6 @@ def conversion_txt(fichier):
         grille=creer_grille(len_x, len_y)
         for y in range(len(readlines)):
             for x in range(len(readlines[0])):
-                print(x, y, len_x, len_y)
                 if len(readlines[y]) != len_x:
                     return None
                 if readlines[y][x] not in ["#", "*", ">", "."]:
