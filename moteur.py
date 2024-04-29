@@ -120,13 +120,12 @@ def calcul_posibilite(plateau, pospion, posparcouru):
     else:
         distanceprecedent = list_add2(pospion, posparcouru[-2])
         pospotentielle = list_add(pospion, distanceprecedent)
-        if pospotentielle[1] < len(plateau) and pospotentielle[0] < len(plateau[0]) and plateau[pospotentielle[1]][pospotentielle[0]] != "H" :
+        if pospotentielle[1] < len(plateau) and pospotentielle[0] < len(plateau[0]) and pospotentielle[1] >= 0 and pospotentielle[0] >= 0 and plateau[pospotentielle[1]][pospotentielle[0]] != "H" :
             mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
         posacheck = list_add(pospotentielle, pos)
-        if posacheck[1] < len(plateau) and posacheck[0] < len(plateau[0]) and plateau[posacheck[1]][posacheck[0]] != "H" :
+        if posacheck[1] < len(plateau) and posacheck[0] < len(plateau[0]) and posacheck[1] >= 0 and posacheck[0] >= 0 and plateau[posacheck[1]][posacheck[0]] != "H" :
             mvtpossible.append(posacheck)
-    print(mvtpossible)
     return mvtpossible
 
 def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
