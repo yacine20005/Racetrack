@@ -44,4 +44,7 @@ def main(map, charge):
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":
             sys.exit()
-
+    if moteur.victoire(pos_parcouru, plateau) is True:
+        print("Victoire")
+    if moteur.defaite(mvtpossible) is True:
+        print("Perdu")

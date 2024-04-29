@@ -6,8 +6,17 @@ import time
 # A = arrivée
 # D = départ
 
-list_add = lambda a, b: [a[i]+b[i] for i in range(len(a))]
-list_add2 = lambda a, b: [a[i]-b[i] for i in range(len(a))]
+def list_add(a, b):
+    result = []
+    for i in range(len(a)):
+        result.append(a[i] + b[i])
+    return result
+
+def list_add2(a, b):
+    result = []
+    for i in range(len(a)):
+        result.append(a[i] - b[i])
+    return result
 
 def creer_grille(x, y):
     grille = []
@@ -117,6 +126,7 @@ def calcul_posibilite(plateau, pospion, posparcouru):
         posacheck = list_add(pospotentielle, pos)
         if posacheck[1] < len(plateau) and posacheck[0] < len(plateau[0]) and plateau[posacheck[1]][posacheck[0]] != "H" :
             mvtpossible.append(posacheck)
+    print(mvtpossible)
     return mvtpossible
 
 def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):

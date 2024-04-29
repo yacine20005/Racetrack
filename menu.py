@@ -47,7 +47,6 @@ def actionboutonsmenu(action, phase, map, choix):
     else:
         return phase
     
-
 def menu():
     map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt", "map3.txt"]
     phase = "Accueil"

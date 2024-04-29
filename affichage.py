@@ -25,7 +25,7 @@ def affiche_boutons(liste_boutons, taille_texte):
                    texte, ancrage="center", taille=taille_texte)
         
 def affichage_fond_ecran():
-     pass
+    pass
 
 
 def affichage_voiture(plateau, pos_actuelle):
