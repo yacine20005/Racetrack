@@ -42,3 +42,4 @@ def main(map, charge):
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":
             sys.exit()
+

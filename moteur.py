@@ -31,9 +31,14 @@ def conversion_txt(fichier):
         readlines = [ligne.rstrip() for ligne in fichier.readlines()]
         len_y = len(readlines)
         len_x = len(readlines[0])
-        grille=creer_grille(len_y, len_x)
+        grille=creer_grille(len_x, len_y)
         for y in range(len(readlines)):
             for x in range(len(readlines[0])):
+                print(x, y, len_x, len_y)
+                if len(readlines[y]) != len_x:
+                    return None
+                if readlines[y][x] not in ["#", "*", ">", "."]:
+                    return None
                 if readlines[y][x] == "#":
                     grille[y][x]="H"
                 elif readlines[y][x] == "*":
