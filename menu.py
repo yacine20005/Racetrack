@@ -49,7 +49,7 @@ def actionboutonsmenu(action, phase, map, choix):
     
 
 def menu():
-    map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt",]
+    map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt", "map3.txt"]
     phase = "Accueil"
     choix = 1
     liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
