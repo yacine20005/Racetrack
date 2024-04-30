@@ -18,6 +18,12 @@ def list_add2(a, b):
         result.append(a[i] - b[i])
     return result
 
+def absolue(a):
+    result = []
+    for i in range(len(a)):
+        result.append(abs(a[i]))
+    return result
+
 def creer_grille(x, y):
     grille = []
     for _ in range(y):
@@ -151,7 +157,6 @@ def victoire(posparcouru, plateau):
 
 def defaite(mvtpossible):
     if len(mvtpossible) < 1:
-        print("perdu")
         return True
     return False
 

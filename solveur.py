@@ -1,34 +1,48 @@
 import collections
 import moteur
-import affichage
-import fltk
-        
-def solveur_profondeur(grille, pos_depart):
-    fltk.cree_fenetre(888, 666)
+
+
+def solveur_old(grille, pos_depart, map):
     deque = collections.deque()
-    deque.append((pos_depart, [pos_depart]))
+    deque.append((pos_depart, [pos_depart],
+                  moteur.list_add2(pos_depart, pos_depart)))
     visite = []
+    #set
     while deque != []:
-        (pos, chemin) = deque.pop()
+        print(deque)
+        (pos, chemin, vitesse) = deque.pop()
         mvt_possible = moteur.calcul_posibilite(grille, pos, chemin)
-        for next_pos in mvt_possible:
-            if next_pos not in visite:
-                if moteur.victoire(chemin + [next_pos], grille):
-                    return chemin + [next_pos]
-                deque.append((next_pos, chemin + [next_pos]))
-                visite.append(next_pos)
-                affichage.affiche_tout(grille, mvt_possible, chemin + [next_pos])
+        if not moteur.defaite(mvt_possible):
+            for next_pos in mvt_possible:
+                if (next_pos, vitesse) in visite:
+                    print("Lavabo")
+                elif (next_pos, vitesse) not in visite:
+                    if moteur.victoire(chemin + [next_pos], grille):
+                        moteur.sauvegarde_partie(chemin + [next_pos], map, 9)
+                        return chemin + [next_pos]
+                    deque.append((next_pos, chemin + [next_pos], moteur.list_add2(next_pos, pos)))
+                    visite.append((next_pos, moteur.list_add2(next_pos, pos)))
     return None
 
-grille = moteur.conversion_txt("map_test.txt")
-pion, pos_depart = moteur.miseenplacepion(grille)
-solveur_profondeur(grille, pos_depart)
+def solveur_profondeur(grille, chemin, visite, map):
+    print('sku')
+    if len(chemin) < 2:
+        vitesse = (1, 1)
+    else:
+        vitesse = moteur.list_add2(chemin[-2], chemin[-1])
+    mvt_possible = moteur.calcul_posibilite(grille, chemin[-1], chemin)
+    for next_pos in mvt_possible:
+        if (tuple(next_pos), tuple(vitesse)) in visite:
+            return None
+        elif (tuple(next_pos), tuple(vitesse)) not in visite:
+            if moteur.victoire(chemin + [next_pos], grille):
+                moteur.sauvegarde_partie(chemin + [next_pos], map, 9)
+                return chemin + [next_pos]
+            visite.add((tuple(next_pos), tuple(moteur.list_add2(next_pos, chemin[-1]))))
+            return solveur_profondeur(grille, chemin + [next_pos], visite, map)
 
-# deque = collections.deque()
-# print(deque)
-# deque.append((pos_depart, [pos_depart]))
-# print(deque)
-# (pos, chemin) = deque.pop()
-# print(deque)
-# deque.append(([3, 1], chemin + [[3, 1]]))
-# print(deque)
+visite = set()
+map="map1.txt"
+grille=moteur.conversion_txt(map)
+pion, pos_depart=moteur.miseenplacepion(grille)
+solveur_profondeur(grille, [pos_depart], visite, map)
