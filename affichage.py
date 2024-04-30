@@ -15,12 +15,13 @@ def affiche_boutons(liste_boutons, taille_texte):
         du coté des boutons en fonction de la taille de la fenetre fltk.
     """
     fltk.efface_tout()
+    fltk.image(0,0, "fond_menu.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"nw",)
     for boutons in liste_boutons:
         aX, aY = boutons[0], boutons[1]
         bX, bY = boutons[2], boutons[3]
         texte = boutons[4]
         fltk.rectangle(aX, aY, bX, bY,
-                        couleur="dark grey")
+                        "dark grey", "white")
         fltk.texte((aX + bX) // 2, (aY + bY) // 2,
                    texte, ancrage="center", taille=taille_texte)
         

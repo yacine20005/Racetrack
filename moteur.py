@@ -1,5 +1,5 @@
 import fltk
-import time
+import math
 
 # R = route
 # H = herbe
@@ -144,6 +144,26 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
         plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
         plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
+
+
+
+
+
+def distance_centre(x1, y1, x2, y2, xc, yc):
+
+    longueursegmentcarre = (x2 - x1) ** 2 + (y2 - y1) ** 2
+    
+    t = max(0, min(1, ((xc - x1) * (x2 - x1) + (yc - y1) * (y2 - y1)) / longueursegmentcarre))
+
+    x_proche = x1 + t * (x2 - x1)
+    y_proche = y1 + t * (y2 - y1)
+    
+    return math.sqrt((x_proche - xc) ** 2 + (y_proche - yc) ** 2)
+
+def distance_intersection_cercle(x1, y1, x2, y2, xc, yc, r):
+    distance = distance_centre(x1, y1, x2, y2, xc, yc)
+    return distance <= r
+
 
 def retour_arriere(posparcouru):
     posparcouru.pop()

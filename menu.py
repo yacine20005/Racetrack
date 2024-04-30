@@ -61,6 +61,10 @@ def menu():
                 phase = evenement_clic_menu(event, liste_boutons, phase, map, choix)
                 liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
                 affichage.affiche_boutons(liste_boutons, 20)
+            if tev == "Redimension":
+                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
+                affichage.affiche_boutons(liste_boutons, 20)
+                print("fait")
             if tev == "Quitte":
                 sys.exit()
 
