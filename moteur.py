@@ -1,6 +1,7 @@
 import fltk
 import math
 
+
 # R = route
 # H = herbe
 # A = arrivée
@@ -126,11 +127,11 @@ def calcul_posibilite(plateau, pospion, posparcouru):
     else:
         distanceprecedent = list_add2(pospion, posparcouru[-2])
         pospotentielle = list_add(pospion, distanceprecedent)
-        if pospotentielle[1] < len(plateau) and pospotentielle[0] < len(plateau[0]) and pospotentielle[1] >= 0 and pospotentielle[0] >= 0 and plateau[pospotentielle[1]][pospotentielle[0]] != "H" :
+        if coup_possible(plateau, pospion, pospotentielle):
             mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
         posacheck = list_add(pospotentielle, pos)
-        if posacheck[1] < len(plateau) and posacheck[0] < len(plateau[0]) and posacheck[1] >= 0 and posacheck[0] >= 0 and plateau[posacheck[1]][posacheck[0]] != "H" :
+        if coup_possible(plateau, pospion, posacheck):
             mvtpossible.append(posacheck)
     return mvtpossible
 
@@ -145,13 +146,29 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
         plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
 
-
-
-
+def coup_possible(plateau, pospion, posacheck):
+    hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
+    largeur_case = fltk.largeur_fenetre() / len(plateau[0])
+    if (0 <= posacheck[1] < len(plateau) and 0 <= posacheck[0] < len(plateau[0]) 
+                and plateau[posacheck[1]][posacheck[0]] != "H"):
+            for y in range(len(plateau)):
+                for x in range(len(plateau[y])):
+                    if plateau[y][x] == "H":
+                        # Si une intersection est détectée avec n'importe quel "H", retourner False
+                        if intersection_cercle(pospion[0] * largeur_case, pospion[1] * hauteur_case,
+                                            posacheck[0] * largeur_case, posacheck[1] * hauteur_case,
+                                            x * largeur_case, y * hauteur_case, hauteur_case * 0.75):
+                            return False
+            return True
+    return False
 
 def distance_centre(x1, y1, x2, y2, xc, yc):
 
     longueursegmentcarre = (x2 - x1) ** 2 + (y2 - y1) ** 2
+
+    if longueursegmentcarre == 0:
+        return math.sqrt((xc - x1)**2 + (yc - y1)**2)
+
     
     t = max(0, min(1, ((xc - x1) * (x2 - x1) + (yc - y1) * (y2 - y1)) / longueursegmentcarre))
 
@@ -160,7 +177,7 @@ def distance_centre(x1, y1, x2, y2, xc, yc):
     
     return math.sqrt((x_proche - xc) ** 2 + (y_proche - yc) ** 2)
 
-def distance_intersection_cercle(x1, y1, x2, y2, xc, yc, r):
+def intersection_cercle(x1, y1, x2, y2, xc, yc, r):
     distance = distance_centre(x1, y1, x2, y2, xc, yc)
     return distance <= r
 
