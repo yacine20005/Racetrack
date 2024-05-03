@@ -43,7 +43,7 @@ def main(map, charge, regle):
                     plateau, pos_actuelle, pos_parcouru, regle)
                 affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
             if nom_touche == "s":
-                num = affichage.choixsauvegarde()
+                num = affichage.choixsauvegarde(False)
                 moteur.sauvegarde_partie(pos_parcouru, map, num, regle)
             if nom_touche == "m":
                 break

@@ -16,13 +16,13 @@ def list_add2(a, b):
         result.append(a[i] - b[i])
     return result
 
-def choixsauvegarde(): 
+def choixsauvegarde(Relance): 
     nom_sauvegarde = ""
-    affiche_fenetre_sauvegarde(nom_sauvegarde)
+    affiche_fenetre_sauvegarde(nom_sauvegarde, Relance)
     ev = fltk.attend_ev()
     nom_touche, nom_sauvegarde = veriftouche(ev, nom_sauvegarde)
     while nom_touche != "Return":
-        affiche_fenetre_sauvegarde(nom_sauvegarde)
+        affiche_fenetre_sauvegarde(nom_sauvegarde, Relance)
         ev = fltk.attend_ev()
         nom_touche, nom_sauvegarde = veriftouche(ev, nom_sauvegarde)
     fltk.efface("sauvegarde")
@@ -46,7 +46,7 @@ def veriftouche(ev, nom_sauvegarde):
         
 
 
-def affiche_fenetre_sauvegarde(nom_sauvegarde):
+def affiche_fenetre_sauvegarde(nom_sauvegarde, Relance):
     MillieuFenetreX = fltk.largeur_fenetre() //2
     MillieuFenetreY = fltk.hauteur_fenetre() //2
     taille_fenetreX = fltk.largeur_fenetre() //2
@@ -76,6 +76,11 @@ def affiche_fenetre_sauvegarde(nom_sauvegarde):
     fltk.texte(MillieuFenetreX, MillieuFenetreY + taille_fenetreY // 8,
                 nom_sauvegarde, 
                 "Black", "center", taille = 13, tag = "sauvegarde")
+    if Relance == True:
+        fltk.texte(MillieuFenetreX, MillieuFenetreY + taille_fenetreY // 3,
+                "Le fichier que vous souhaitez charger n'existe pas", 
+                "Red", "center", taille = 13, tag = "sauvegarde")
+
     
     
     

@@ -52,7 +52,7 @@ def actionboutonsmenu(action, phase, map, choix, regle):
         main.main(moteur.charger_fichier(choix),True, regle[0])
         return "", "Accueil"
     elif action == "Choix de la sauvegarde":
-        choix = affichage.choixsauvegarde()
+        choix = affichage.choixsauvegarde(False)
         phase = "Charger"
         return choix, phase
     else:

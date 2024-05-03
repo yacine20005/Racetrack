@@ -202,5 +202,5 @@ def charger_fichier(fichier):
             print(eval(readlines[0]))
             return eval(readlines[0])
     else:
-        choix = affichage.choixsauvegarde()
+        choix = affichage.choixsauvegarde(True)
         return charger_fichier(choix)
