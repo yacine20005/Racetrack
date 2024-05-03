@@ -1,22 +1,12 @@
 import fltk
 import math
+import os.path
+import affichage
 
 # R = route
 # H = herbe
 # A = arrivée
 # D = départ
-
-def list_add(a, b):
-    result = []
-    for i in range(len(a)):
-        result.append(a[i] + b[i])
-    return result
-
-def list_add2(a, b):
-    result = []
-    for i in range(len(a)):
-        result.append(a[i] - b[i])
-    return result
 
 def absolue(a):
     result = []
@@ -124,12 +114,12 @@ def calcul_posibilite(plateau, pospion, posparcouru, regle):
     if len(posparcouru) <= 1:
         pospotentielle = pospion
     else:
-        distanceprecedent = list_add2(pospion, posparcouru[-2])
-        pospotentielle = list_add(pospion, distanceprecedent)
+        distanceprecedent = affichage.list_add2(pospion, posparcouru[-2])
+        pospotentielle = affichage.list_add(pospion, distanceprecedent)
         if coup_possible(plateau, pospion, pospotentielle, regle):
             mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
-        posacheck = list_add(pospotentielle, pos)
+        posacheck = affichage.list_add(pospotentielle, pos)
         if coup_possible(plateau, pospion, posacheck, regle):
             mvtpossible.append(posacheck)
     return mvtpossible
@@ -205,6 +195,12 @@ def sauvegarde_partie(posparcouru, map, numero, regle):
         mon_fichier.write(sauvegarde)
 
 def charger_fichier(fichier):
-    with open(f"./sauvegardes/{fichier}.txt") as fichier:
-        readlines = fichier.readlines()
-        return eval(readlines[0])
+    print(os.path.exists(f"./sauvegardes/{fichier}.txt"))
+    if os.path.exists(f"./sauvegardes/{fichier}.txt"):
+        with open(f"./sauvegardes/{fichier}.txt") as fichier:
+            readlines = fichier.readlines()
+            print(eval(readlines[0]))
+            return eval(readlines[0])
+    else:
+        choix = affichage.choixsauvegarde()
+        return charger_fichier(choix)

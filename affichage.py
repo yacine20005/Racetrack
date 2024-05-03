@@ -1,6 +1,20 @@
 import fltk
-import moteur
 import sys
+
+def posactuelle(pos_parcouru):
+    return pos_parcouru[-1]
+
+def list_add(a, b):
+    result = []
+    for i in range(len(a)):
+        result.append(a[i] + b[i])
+    return result
+
+def list_add2(a, b):
+    result = []
+    for i in range(len(a)):
+        result.append(a[i] - b[i])
+    return result
 
 def choixsauvegarde(): 
     nom_sauvegarde = ""
@@ -153,14 +167,14 @@ def affiche_trace(posparcouru, plateau):
     for i in range(len(posparcouru)-1):
         x, y = posparcouru[i][0] * largeur_case, posparcouru[i][1] * hauteur_case
         x2, y2 = posparcouru[i+1][0] * largeur_case, posparcouru[i+1][1] * hauteur_case
-        variable = max(moteur.list_add2([posparcouru[i+1][0],posparcouru[i+1][1]],[posparcouru[i][0],posparcouru[i][1]]))
+        variable = max(list_add2([posparcouru[i+1][0],posparcouru[i+1][1]],[posparcouru[i][0],posparcouru[i][1]]))
         if variable < 0:
             variable = -(variable)
         couleur = couleurs[variable]
         fltk.ligne(x, y, x2, y2, couleur, 3)
 
 def affiche_tout(plateau, mvtpossible, posparcouru):
-    pos_actuelle = moteur.posactuelle(posparcouru)
+    pos_actuelle = posactuelle(posparcouru)
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)

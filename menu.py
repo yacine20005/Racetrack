@@ -30,7 +30,7 @@ def actionboutonsmenu(action, phase, map, choix, regle):
     elif action == "Retour":
         phase = "Accueil"
         return choix, phase
-    elif action =="‎Jouer‎":
+    elif action =="Lancer":
         main.main(map[0], False, regle[0])
         menu()
     elif action == "Options":

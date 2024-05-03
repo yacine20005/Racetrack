@@ -36,7 +36,7 @@ def initialiseboutonsmenu(phase, map, Choix, regle):
                                 [MillieufenetreX - fltk.largeur_fenetre()//6, 
                                         MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
-                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "‎Jouer‎"],
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "Lancer"],
                                 [MillieufenetreX - fltk.largeur_fenetre()//6, 
                                         MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
@@ -62,7 +62,6 @@ def initialiseboutonsmenu(phase, map, Choix, regle):
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
                                         MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "‎Retour‎"]]
         elif phase == "Options":
-                print("boutons")
                 liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
                                         MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
