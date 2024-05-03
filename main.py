@@ -45,9 +45,8 @@ def main(map, charge, regle):
             if nom_touche == "s":
                 num = affichage.choixsauvegarde(False)
                 moteur.sauvegarde_partie(pos_parcouru, map, num, regle)
-            if nom_touche == "m":
+            if nom_touche == "Echap":
                 break
-
         if tev == "Redimension":
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":
