@@ -4,22 +4,23 @@ import affichage
 import sys
 
 
-def main(map, charge):
+def main(map, charge, regle):
     if charge is False:
         plateau = moteur.conversion_txt(map)
         plateau_pion, posdepart = moteur.miseenplacepion(plateau)
         pos_parcouru = [posdepart]
         pos_actuelle = moteur.posactuelle(pos_parcouru)
         mvtpossible = moteur.calcul_posibilite(
-            plateau, pos_actuelle, pos_parcouru)
+            plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
     else:
         plateau = moteur.conversion_txt(map[1])
         pos_parcouru = map[0]
+        regle = map[2]
         pos_actuelle = moteur.posactuelle(pos_parcouru)
         plateau_pion = moteur.remiseenplace(pos_actuelle, plateau)
         mvtpossible = moteur.calcul_posibilite(
-            plateau, pos_actuelle, pos_parcouru)
+            plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
 
     while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
@@ -31,7 +32,7 @@ def main(map, charge):
                                    mvtpossible, pos_actuelle, pos_parcouru)
             pos_actuelle = moteur.posactuelle(pos_parcouru)
             mvtpossible = moteur.calcul_posibilite(
-                plateau, pos_actuelle, pos_parcouru)
+                plateau, pos_actuelle, pos_parcouru, regle)
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Touche":
             nom_touche = fltk.touche(event)
@@ -39,11 +40,11 @@ def main(map, charge):
                 pos_parcouru = moteur.retour_arriere(pos_parcouru)
                 pos_actuelle = moteur.posactuelle(pos_parcouru)
                 mvtpossible = moteur.calcul_posibilite(
-                    plateau, pos_actuelle, pos_parcouru)
+                    plateau, pos_actuelle, pos_parcouru, regle)
                 affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
             if nom_touche == "s":
-                num = moteur.choixsauvegarde()
-                moteur.sauvegarde_partie(pos_parcouru, map, num)
+                num = affichage.choixsauvegarde()
+                moteur.sauvegarde_partie(pos_parcouru, map, num, regle)
             if nom_touche == "m":
                 break
 

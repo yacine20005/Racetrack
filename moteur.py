@@ -1,7 +1,6 @@
 import fltk
 import math
 
-
 # R = route
 # H = herbe
 # A = arrivée
@@ -119,7 +118,7 @@ def remiseenplace(pos_actuelle, plateau):
 def posactuelle(pos_parcouru):
     return pos_parcouru[-1]
 
-def calcul_posibilite(plateau, pospion, posparcouru):
+def calcul_posibilite(plateau, pospion, posparcouru, regle):
     voisinpossibilite = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]
     mvtpossible = []
     if len(posparcouru) <= 1:
@@ -127,11 +126,11 @@ def calcul_posibilite(plateau, pospion, posparcouru):
     else:
         distanceprecedent = list_add2(pospion, posparcouru[-2])
         pospotentielle = list_add(pospion, distanceprecedent)
-        if coup_possible(plateau, pospion, pospotentielle):
+        if coup_possible(plateau, pospion, pospotentielle, regle):
             mvtpossible.append(pospotentielle)
     for pos in voisinpossibilite:
         posacheck = list_add(pospotentielle, pos)
-        if coup_possible(plateau, pospion, posacheck):
+        if coup_possible(plateau, pospion, posacheck, regle):
             mvtpossible.append(posacheck)
     return mvtpossible
 
@@ -146,15 +145,16 @@ def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
         plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
 
-def coup_possible(plateau, pospion, posacheck):
+def coup_possible(plateau, pospion, posacheck, regle):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
     largeur_case = fltk.largeur_fenetre() / len(plateau[0])
     if (0 <= posacheck[1] < len(plateau) and 0 <= posacheck[0] < len(plateau[0]) 
                 and plateau[posacheck[1]][posacheck[0]] != "H"):
+            if regle == "souple":
+                return True
             for y in range(len(plateau)):
                 for x in range(len(plateau[y])):
                     if plateau[y][x] == "H":
-                        # Si une intersection est détectée avec n'importe quel "H", retourner False
                         if intersection_cercle(pospion[0] * largeur_case, pospion[1] * hauteur_case,
                                             posacheck[0] * largeur_case, posacheck[1] * hauteur_case,
                                             x * largeur_case, y * hauteur_case, hauteur_case * 0.75):
@@ -197,23 +197,14 @@ def defaite(mvtpossible):
         return True
     return False
 
-def sauvegarde_partie(posparcouru, map, numero):
+def sauvegarde_partie(posparcouru, map, numero, regle):
     print("sauvegarde en cours..")
-    chemin = f"./sauvegardes/sauvegarde_{numero}.txt"
-    sauvegarde = str([posparcouru,map])
+    chemin = f"./sauvegardes/{numero}.txt"
+    sauvegarde = str([posparcouru,map, regle])
     with open(chemin, mode = "w") as mon_fichier:
         mon_fichier.write(sauvegarde)
 
 def charger_fichier(fichier):
-    with open(f"./sauvegardes/sauvegarde_{fichier}.txt") as fichier:
+    with open(f"./sauvegardes/{fichier}.txt") as fichier:
         readlines = fichier.readlines()
         return eval(readlines[0])
-    
-def choixsauvegarde():
-    ev = fltk.attend_ev()
-    nom_touche = fltk.touche(ev)
-    while not nom_touche.isdigit() or not (1 <= int(nom_touche) <= 99):
-        ev = fltk.attend_ev()
-        nom_touche = fltk.touche(ev)
-    print("lets go")
-    return int(nom_touche)

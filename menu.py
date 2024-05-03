@@ -5,66 +5,77 @@ import moteur
 import affichage
 import boutons
 
-def evenement_clic_menu(event, liste_boutons, phase, map, choix):
+def evenement_clic_menu(event, liste_boutons, phase, map, choix, regle):
     Xclick, Yclick = fltk.abscisse(event), fltk.ordonnee(event)
     for boutons in liste_boutons:
         if Xclick in range(boutons[0],boutons[2]) and Yclick in range(boutons[1], boutons[3]):
-            return actionboutonsmenu(boutons[4], phase, map, choix)
-    return phase
+            return actionboutonsmenu(boutons[4], phase, map, choix, regle)
+    return choix, phase
           
-def actionboutonsmenu(action, phase, map, choix):
+def actionboutonsmenu(action, phase, map, choix, regle):
     if action == "Jouer":
         phase = "Jouer"
-        return phase
+        return choix, phase
     elif action == "Regles":
         phase = "Regles"
-        return phase
+        return choix, phase
     elif action == "Quitter":
         sys.exit()
     elif action == "Nouvelle Partie":
         phase = "Choix"
-        return phase
+        return choix, phase
     elif action == "Charger":
         phase = "Charger"
-        return phase
+        return choix, phase
     elif action == "Retour":
         phase = "Accueil"
-        return phase
+        return choix, phase
     elif action =="‎Jouer‎":
-        main.main(map[0], charge=False)
+        main.main(map[0], False, regle[0])
         menu()
+    elif action == "Options":
+        phase = "Options"
+        return choix, phase
+    elif action == "Règle":
+        map = moteur.decalagegauche(regle)
+        return choix, phase
     elif action == "Choix de la map":
         map = moteur.decalagegauche(map)
-        return phase
+        return choix, phase
+    elif action == "‎‎Retour‎‎":
+        phase = "Choix"
+        return choix, phase
     elif action == "‎Retour‎":
         phase = "Jouer"
-        return phase
+        return choix, phase
     elif action == "‎Charger‎":
-        main.main(moteur.charger_fichier(choix),True)
-    elif action == f"Choix de la sauvegarde : {choix}":
-        choix = moteur.choixsauvegarde()
-        main.main(moteur.charger_fichier(choix),True)
+        main.main(moteur.charger_fichier(choix),True, regle[0])
+        return "", "Accueil"
+    elif action == "Choix de la sauvegarde":
+        choix = affichage.choixsauvegarde()
+        phase = "Charger"
+        return choix, phase
     else:
-        return phase
+        return choix, phase
     
 def menu():
     map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt", "map3.txt"]
     phase = "Accueil"
-    choix = 1
-    liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
+    choix = ""
+    regle = ["souple", "stricte"]
+    liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix, regle)
     affichage.affiche_boutons(liste_boutons, 20)
 
     while True:
             event = fltk.attend_ev()
             tev = fltk.type_ev(event)
             if tev == "ClicGauche":
-                phase = evenement_clic_menu(event, liste_boutons, phase, map, choix)
-                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
+                choix, phase = evenement_clic_menu(event, liste_boutons, phase, map, choix, regle)
+                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix, regle)
                 affichage.affiche_boutons(liste_boutons, 20)
             if tev == "Redimension":
-                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix)
+                liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix, regle)
                 affichage.affiche_boutons(liste_boutons, 20)
-                print("fait")
             if tev == "Quitte":
                 sys.exit()
 
