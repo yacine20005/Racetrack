@@ -186,4 +186,5 @@ def affiche_tout(plateau, mvtpossible, posparcouru):
     affiche_possibilite(plateau, mvtpossible)
     affichage_voiture(plateau, pos_actuelle)
     affiche_trace(posparcouru, plateau)
+    fltk.mise_a_jour()
 

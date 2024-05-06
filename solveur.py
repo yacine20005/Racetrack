@@ -4,6 +4,7 @@ import affichage
 import fltk
 import time
 import sys
+import main
 
 def solveur_profondeur(grille, chemin, visite, map):
     print('sku')
@@ -30,8 +31,8 @@ def recherche_profondeur_iteratif(grille, chemin_initial, visite, map):
         chemin, vitesse = pile.pop()
         vitesse = (abs(vitesse[0]), abs(vitesse[1]))
         mvt_possible = moteur.calcul_posibilite(grille, chemin[-1], chemin, "souple")
-
         for next_pos in mvt_possible:
+            affichage.affiche_tout(grille, mvt_possible, chemin)
             if (tuple(next_pos), tuple(vitesse)) not in visite:
                 if moteur.victoire(chemin + [next_pos], grille):
                     moteur.sauvegarde_partie(chemin + [next_pos], map, 9, "souple")
@@ -40,6 +41,8 @@ def recherche_profondeur_iteratif(grille, chemin_initial, visite, map):
                 pile.append((chemin + [next_pos], affichage.list_add2(next_pos, chemin[-1])))
     return False
 
+
+fltk.cree_fenetre(800,800)
 sys.setrecursionlimit(100000)
 visite = set()
 map="map_test.txt"
