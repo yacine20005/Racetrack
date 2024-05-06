@@ -23,7 +23,9 @@ def main(map, charge, regle):
             plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
 
-    while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
+    #while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
+    while moteur.defaite(mvtpossible) is False:
+
         # neuille
         event = fltk.attend_ev()
         tev = fltk.type_ev(event)
