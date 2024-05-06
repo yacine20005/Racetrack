@@ -28,7 +28,7 @@ def recherche_profondeur_iteratif(grille, chemin_initial, visite, map):
     pile = [(chemin_initial, (1, 1))]
     while pile:
         chemin, vitesse = pile.pop()
-        vitesse = (abs(vitesse[0]), abs(vitesse[1]))  # Modify vitesse to absolute value
+        vitesse = (abs(vitesse[0]), abs(vitesse[1]))
         mvt_possible = moteur.calcul_posibilite(grille, chemin[-1], chemin, "souple")
 
         for next_pos in mvt_possible:
