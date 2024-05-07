@@ -44,13 +44,13 @@ def actionboutonsmenu(action, phase, map, choix, regle):
     elif action == "Choix de la map":
         map = moteur.decalagegauche(map)
         return choix, phase
-    elif action == "‎‎Retour‎‎":
+    elif action == "  Retour  ":
         phase = "Choix"
         return choix, phase
-    elif action == "‎Retour‎":
+    elif action == " Retour ":
         phase = "Jouer"
         return choix, phase
-    elif action == "‎Charger‎":
+    elif action == " Charger ":
         main.main(moteur.charger_fichier(choix),True, regle[0])
         return "", "Accueil"
     elif action == "Choix de la sauvegarde":
