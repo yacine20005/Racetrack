@@ -179,9 +179,7 @@ def affiche_trace(posparcouru, plateau):
         fltk.ligne(x, y, x2, y2, couleur, 3)
 
 def affiche_tout(plateau, mvtpossible, posparcouru):
-    print(f"posparcouru = {posparcouru}")
     pos_actuelle = posactuelle(posparcouru)
-    print(f"pos_actuelle = {pos_actuelle}")
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)
