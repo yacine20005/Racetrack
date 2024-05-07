@@ -89,6 +89,23 @@ def posdepart(plateau):
                 zonedepart.append([x,y])
     return zonedepart
 
+def miseenplacepion(plateau):
+        len_y = len(plateau)
+        len_x = len(plateau[0])
+        listeposX = []
+        listeposY = []
+        posfinalX, posfinalY = 0,0
+        grille = creer_grille(len_x, len_y)
+        for y in range(len(plateau)):
+            for x in range(len(plateau[0])):
+                if plateau[y][x] == "D":
+                    listeposX.append(x)
+                    listeposY.append(y)
+        posfinalX = (max(listeposX) + min(listeposX)) // 2
+        posfinalY = (max(listeposY) + min(listeposY)) // 2
+        grille[posfinalY][posfinalX] = 1
+        posdepart = [posfinalX,posfinalY]
+        return grille, posdepart
 
 def depart(plateau):
     mvtpossible = posdepart(plateau)
