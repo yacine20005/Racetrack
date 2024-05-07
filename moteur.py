@@ -2,6 +2,7 @@ import fltk
 import math
 import os.path
 import affichage
+import sys
 
 # R = route
 # H = herbe
@@ -80,23 +81,35 @@ def conversion_img(fichier, maillage):
                 grille[y][x] = "R"
     afficher_grille(grille)
 
-def miseenplacepion(plateau):
-        len_y = len(plateau)
-        len_x = len(plateau[0])
-        listeposX = []
-        listeposY = []
-        posfinalX, posfinalY = 0,0
-        grille = creer_grille(len_x, len_y)
-        for y in range(len(plateau)):
-            for x in range(len(plateau[0])):
-                if plateau[y][x] == "D":
-                    listeposX.append(x)
-                    listeposY.append(y)
-        posfinalX = (max(listeposX) + min(listeposX)) // 2
-        posfinalY = (max(listeposY) + min(listeposY)) // 2
-        grille[posfinalY][posfinalX] = 1
-        posdepart = [posfinalX,posfinalY]
-        return grille, posdepart
+def posdepart(plateau):
+    zonedepart = []
+    for y in range(len(plateau)):
+        for x in range(len(plateau[y])):
+            if plateau[y][x]=="D":
+                zonedepart.append([x,y])
+    return zonedepart
+
+
+def depart(plateau):
+    mvtpossible = posdepart(plateau)
+    affichage.affiche_depart(plateau, mvtpossible)
+    pos_parcouru = []
+    plateau_pion = creer_grille(len(plateau), len(plateau[1]))
+    while pos_parcouru == []:
+        ev = fltk.attend_ev()
+        tev = fltk.type_ev(ev)
+        print(tev, tev=="ClicGauche")
+        if tev == "ClicGauche":
+            print("hehe")
+            gerer_evenement(ev, plateau_pion,
+                                   mvtpossible, pos_parcouru)
+        if tev == "Redimension":
+            affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
+        if tev == "Quitte":
+            sys.exit()
+    print(pos_parcouru)
+    return plateau_pion, pos_parcouru[-1]
+
 
 def remiseenplace(pos_actuelle, plateau):
     len_y = len(plateau)
@@ -124,16 +137,19 @@ def calcul_posibilite(plateau, pospion, posparcouru, regle):
             mvtpossible.append(posacheck)
     return mvtpossible
 
-def gerer_evenement(ev,plateau_pion, mvtpossible, poseactuelle, pos_parcouru):
+def gerer_evenement(ev,plateau_pion, mvtpossible, pos_parcouru):
     hauteur_case = fltk.hauteur_fenetre() / len(plateau_pion) 
     largeur_case = fltk.largeur_fenetre() / len(plateau_pion[0])
     Xclick, Yclick = fltk.abscisse(ev), fltk.ordonnee(ev)
     Xcaseclick = int((Xclick+largeur_case//2) // largeur_case)
     Ycaseclick = int((Yclick+hauteur_case//2) // hauteur_case)
     if [Xcaseclick, Ycaseclick] in mvtpossible:
-        plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
-        plateau_pion[Ycaseclick][Xcaseclick] = 1
+        if len(pos_parcouru) > 1:
+            poseactuelle = posactuelle(pos_parcouru)
+            plateau_pion[poseactuelle[1]][poseactuelle[0]] = 0
+            plateau_pion[Ycaseclick][Xcaseclick] = 1
         pos_parcouru.append([Xcaseclick, Ycaseclick])
+
 
 def coup_possible(plateau, pospion, posacheck, regle):
     if (0 <= posacheck[1] < len(plateau) and 0 <= posacheck[0] < len(plateau[0]) 

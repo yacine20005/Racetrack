@@ -188,3 +188,10 @@ def affiche_tout(plateau, mvtpossible, posparcouru):
     affiche_trace(posparcouru, plateau)
     fltk.mise_a_jour()
 
+def affiche_depart(plateau, mvtpossible):
+    fltk.efface_tout()
+    affichage_plateau(plateau)
+    affichage_trait(plateau)
+    affiche_possibilite(plateau, mvtpossible)
+    fltk.mise_a_jour()
+
