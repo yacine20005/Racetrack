@@ -7,11 +7,11 @@ import sys
 def main(map, charge, regle):
     if charge is False:
         plateau = moteur.conversion_txt(map)
-        plateau_pion, posdepart = moteur.miseenplacepion(plateau)
+        plateau_pion, posdepart = moteur.depart(plateau)
         pos_parcouru = [posdepart]
         pos_actuelle = moteur.posactuelle(pos_parcouru)
         mvtpossible = moteur.calcul_posibilite(
-            plateau, pos_actuelle, pos_parcouru, regle)
+        plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
     else:
         plateau = moteur.conversion_txt(map[1])
@@ -31,7 +31,7 @@ def main(map, charge, regle):
         tev = fltk.type_ev(event)
         if tev == "ClicGauche":
             moteur.gerer_evenement(event, plateau_pion,
-                                   mvtpossible, pos_actuelle, pos_parcouru)
+                                   mvtpossible, pos_parcouru)
             pos_actuelle = moteur.posactuelle(pos_parcouru)
             mvtpossible = moteur.calcul_posibilite(
                 plateau, pos_actuelle, pos_parcouru, regle)
