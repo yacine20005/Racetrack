@@ -1,23 +1,21 @@
-import collections
 import moteur
 import affichage
 import fltk
-import time
 import sys
-import main
+import collections
 
 def solveur_profondeur(grille, chemin, visite, map):
     if len(chemin) < 2:
-        vitesse = (1, 1)
+        vitesse = (0, 0)
     else:
         vitesse = affichage.list_add2(chemin[-2], chemin[-1])
-        vitesse = (abs(vitesse[0]), abs(vitesse[1]))
-    mvt_possible = moteur.calcul_posibilite(grille, chemin[-1], chemin, "souple")
+        vitesse = (vitesse[0], vitesse[1])
+    mvt_possible = moteur.calcul_posibilite(grille, chemin[-1], chemin, "strict")
     for next_pos in mvt_possible:
-        print((tuple(next_pos), tuple(vitesse)) not in visite)
-        if (tuple(next_pos), tuple(vitesse)) not in visite:                      
+        if (tuple(next_pos), tuple(vitesse)) not in visite:      
+            affichage.affiche_tout(grille, mvt_possible, chemin + [next_pos])
             if moteur.victoire(chemin + [next_pos], grille):
-                moteur.sauvegarde_partie(chemin + [next_pos], map, 9, "souple")
+                moteur.sauvegarde_partie(chemin + [next_pos], map, 9, "strict")
                 return chemin + [next_pos]
             visite.add((tuple(next_pos), tuple(vitesse)))         
             result = solveur_profondeur(grille, chemin + [next_pos], visite, map)
@@ -25,10 +23,20 @@ def solveur_profondeur(grille, chemin, visite, map):
                 return result
     return None
 
-fltk.cree_fenetre(700,700)
-sys.setrecursionlimit(100000)
+def solveur_largeur(grille, map):
+    pile = collections.deque()
+    pion, pos_depart = moteur.miseenplacepion(grille)
+    pile.append([pos_depart], (0, 0))
+    while len(pile) != 0:
+        chemin, vitesse = pile.popleft()
+        
+
+
+fltk.cree_fenetre(800,800)
+sys.setrecursionlimit(10000)
 visite = set()
 map="map2.txt"
 grille=moteur.conversion_txt(map)
 pion, pos_depart=moteur.miseenplacepion(grille)
+print(pos_depart)
 print(solveur_profondeur(grille, [pos_depart], visite, map))
