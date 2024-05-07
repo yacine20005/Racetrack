@@ -20,6 +20,8 @@ def actionboutonsmenu(action, phase, map, choix, regle):
         phase = "Regles"
         return choix, phase
     elif action == "Quitter":
+        #alt + 060
+        #espaces insécables
         sys.exit()
     elif action == "Nouvelle Partie":
         phase = "Choix"
@@ -62,7 +64,7 @@ def menu():
     map = ["map_mini.txt","map_test.txt","map1.txt","map2.txt", "map3.txt"]
     phase = "Accueil"
     choix = ""
-    regle = ["souple", "stricte"]
+    regle = ["souple", "strict"]
     liste_boutons = boutons.initialiseboutonsmenu(phase, map, choix, regle)
     affichage.affiche_boutons(liste_boutons, 20)
 
