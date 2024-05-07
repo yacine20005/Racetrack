@@ -38,6 +38,7 @@ def main(map, charge, regle):
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Touche":
             nom_touche = fltk.touche(event)
+            print(nom_touche)
             if nom_touche == "BackSpace":
                 pos_parcouru = moteur.retour_arriere(pos_parcouru)
                 pos_actuelle = moteur.posactuelle(pos_parcouru)
@@ -47,7 +48,7 @@ def main(map, charge, regle):
             if nom_touche == "s":
                 num = affichage.choixsauvegarde(False)
                 moteur.sauvegarde_partie(pos_parcouru, map, num, regle)
-            if nom_touche == "Echap":
+            if nom_touche == "Escape":
                 break
         if tev == "Redimension":
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)

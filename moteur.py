@@ -98,16 +98,13 @@ def depart(plateau):
     while pos_parcouru == []:
         ev = fltk.attend_ev()
         tev = fltk.type_ev(ev)
-        print(tev, tev=="ClicGauche")
         if tev == "ClicGauche":
-            print("hehe")
             gerer_evenement(ev, plateau_pion,
                                    mvtpossible, pos_parcouru)
         if tev == "Redimension":
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":
             sys.exit()
-    print(pos_parcouru)
     return plateau_pion, pos_parcouru[-1]
 
 
