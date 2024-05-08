@@ -170,17 +170,16 @@ def coup_possible(plateau, pospion, posacheck, regle):
                 and plateau[posacheck[1]][posacheck[0]] != "H"):
             if regle == "souple":
                 return True
-            else:
-                hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
-                largeur_case = fltk.largeur_fenetre() / len(plateau[0])
-                for y in range(len(plateau)):
-                    for x in range(len(plateau[y])):
-                        if plateau[y][x] == "H":
-                            if intersection_cercle(pospion[0] * largeur_case, pospion[1] * hauteur_case,
-                                                posacheck[0] * largeur_case, posacheck[1] * hauteur_case,
-                                                x * largeur_case, y * hauteur_case, hauteur_case * 0.75):
-                                return False
-                return True
+            hauteur_case = fltk.hauteur_fenetre() / len(plateau) 
+            largeur_case = fltk.largeur_fenetre() / len(plateau[0])
+            for y in range(len(plateau)):
+                for x in range(len(plateau[y])):
+                    if plateau[y][x] == "H":
+                        if intersection_cercle(pospion[0] * largeur_case, pospion[1] * hauteur_case,
+                                            posacheck[0] * largeur_case, posacheck[1] * hauteur_case,
+                                            x * largeur_case, y * hauteur_case, hauteur_case * 0.75):
+                            return False
+            return True
     return False
 
 def distance_centre(x1, y1, x2, y2, xc, yc):
