@@ -25,8 +25,8 @@ def creer_grille(x, y):
     return grille
 
 def decalagegauche(lst):
-        premier = lst.pop(0)  # Retire le premier élément et le sauvegarde
-        lst.append(premier)   # Ajoute cet élément à la fin de la liste
+        premier = lst.pop(0)
+        lst.append(premier)
         return lst
 
 def afficher_grille(grille):
@@ -201,10 +201,15 @@ def intersection_cercle(x1, y1, x2, y2, xc, yc, r):
     distance = distance_centre(x1, y1, x2, y2, xc, yc)
     return distance <= r
 
-
 def retour_arriere(posparcouru):
     posparcouru.pop()
     return posparcouru
+
+def trouver_arrivee(plateau):
+    for y in range(len(plateau)):
+        for x in range(len(plateau[y])):
+            if plateau[y][x]=="A":
+                return [x,y]
 
 def victoire(posparcouru, plateau):
     pos = posactuelle(posparcouru)
