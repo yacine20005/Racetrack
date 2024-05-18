@@ -2,7 +2,6 @@ import fltk
 import moteur
 import affichage
 import sys
-import time
 
 
 def main(map, charge, regle):
@@ -24,8 +23,8 @@ def main(map, charge, regle):
             plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
 
-    #while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
-    while moteur.defaite(mvtpossible) is False:
+    while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
+    #while moteur.defaite(mvtpossible) is False:
 
         # neuille
         event = fltk.attend_ev()
@@ -55,9 +54,7 @@ def main(map, charge, regle):
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Quitte":
             sys.exit()
-    if moteur.victoire(pos_parcouru, plateau) is True:
+    if moteur.victoire(pos_parcouru, plateau):
         affichage.affichevictoire()
-    elif moteur.defaite(mvtpossible) is True:
+    elif moteur.defaite(mvtpossible):
         affichage.affichedefaite()
-    fltk.mise_a_jour()
-    time.sleep(5)

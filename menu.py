@@ -24,6 +24,7 @@ def actionboutonsmenu(action, phase, map, choix, regle, solveur, affichage):
     elif action == "Quitter":
         sys.exit()
     elif action == "Résoudre":
+        choix = af.choixsauvegarde(False)
         sv.solveur(solveur[0], map[0], regle[0], affichage, choix)
         return choix, phase
     elif action == "  Options  ":

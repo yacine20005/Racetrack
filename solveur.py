@@ -113,7 +113,3 @@ def solveur(choix, map, regle, affiche, sauvegarde):
         return solveur_bidirectionnel(grille, pos_depart, pos_arrivee, map, regle, affiche[0])
     else:
         return None
-    
-"""fltk.cree_fenetre(800,800)
-sys.setrecursionlimit(10000)
-solveur("Bidirectionnel", "map2.txt", "souple", False)"""
