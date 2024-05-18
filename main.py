@@ -14,6 +14,10 @@ def main(map, charge, regle):
         plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
     else:
+        if len(map) > 3:
+            solveur = map[3]
+        else:
+            solveur = False
         plateau = moteur.conversion_txt(map[1])
         pos_parcouru = map[0]
         regle = map[2]
@@ -23,10 +27,7 @@ def main(map, charge, regle):
             plateau, pos_actuelle, pos_parcouru, regle)
         affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
 
-    while moteur.victoire(pos_parcouru, plateau) is False and moteur.defaite(mvtpossible) is False:
-    #while moteur.defaite(mvtpossible) is False:
-
-        # neuille
+    while moteur.fin_de_partie(pos_parcouru, plateau, mvtpossible, solveur): # True si solveur, False sinon ! 
         event = fltk.attend_ev()
         tev = fltk.type_ev(event)
         if tev == "ClicGauche":
@@ -38,7 +39,6 @@ def main(map, charge, regle):
             affichage.affiche_tout(plateau, mvtpossible, pos_parcouru)
         if tev == "Touche":
             nom_touche = fltk.touche(event)
-            print(nom_touche)
             if nom_touche == "BackSpace":
                 pos_parcouru = moteur.retour_arriere(pos_parcouru)
                 pos_actuelle = moteur.posactuelle(pos_parcouru)

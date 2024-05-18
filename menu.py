@@ -14,7 +14,6 @@ def evenement_clic_menu(event, liste_boutons, phase, map, choix, regle, solveur,
     return choix, phase
           
 def actionboutonsmenu(action, phase, map, choix, regle, solveur, affichage):
-    print(action)
     if action == "Jouer":
         phase = "Jouer"
         return choix, phase

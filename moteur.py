@@ -211,6 +211,15 @@ def trouver_arrivee(plateau):
             if plateau[y][x]=="A":
                 return [x,y]
 
+def fin_de_partie(posparcouru, plateau, mvtpossible, solveur):
+    if solveur:
+        return defaite(mvtpossible)
+    elif victoire(posparcouru, plateau) or defaite(mvtpossible):
+        return True
+    return False
+
+
+
 def victoire(posparcouru, plateau):
     pos = posactuelle(posparcouru)
     if plateau[pos[1]][pos[0]] == 'A':

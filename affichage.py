@@ -197,12 +197,14 @@ def affiche_depart(plateau, mvtpossible):
     fltk.mise_a_jour()
 
 def affichevictoire():
+    time.sleep(2)
     fltk.efface_tout()
     fltk.image(0,0, "victoire.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
     fltk.texte(fltk.largeur_fenetre()//2, fltk.hauteur_fenetre()//2,"Victoire", "Black", "c")
     fltk.mise_a_jour()
     time.sleep(3)
 def affichedefaite():
+    time.sleep(2)
     fltk.efface_tout()
     fltk.image(0,0, "defaite.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
     fltk.texte(fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"Défaite", "Black", "c")

@@ -5,7 +5,7 @@ import sys
 import collections
 import random
 
-def solveur_profondeur(grille, chemin, visite, map, regle, affiche):
+def solveur_profondeur(grille, chemin, visite, map, regle, affiche, sauvegarde):
     if len(chemin) < 2:
         vitesse = (0, 0)
     else:
@@ -17,15 +17,15 @@ def solveur_profondeur(grille, chemin, visite, map, regle, affiche):
             if affiche:
                 affichage.affiche_tout(grille, mvt_possible, chemin + [next_pos])
             elif moteur.victoire(chemin + [next_pos], grille):
-                moteur.sauvegarde_partie(chemin + [next_pos], map, 9, regle)
+                moteur.sauvegarde_partie(chemin + [next_pos], map, sauvegarde, regle)
                 return chemin + [next_pos]
             visite.add((tuple(next_pos), tuple(vitesse)))         
-            result = solveur_profondeur(grille, chemin + [next_pos], visite, map, regle, affiche)
+            result = solveur_profondeur(grille, chemin + [next_pos], visite, map, regle, affiche, sauvegarde)
             if result is not None:
                 return result
     return None
 
-def solveur_largeur(grille, visite, map, regle, affiche):
+def solveur_largeur(grille, visite, map, regle, affiche, sauvegarde):
     pile = collections.deque()
     pion, pos_depart=moteur.miseenplacepion(grille)
     pile.append(([pos_depart], (0, 0)))
@@ -37,13 +37,13 @@ def solveur_largeur(grille, visite, map, regle, affiche):
                 if affiche:
                     affichage.affiche_tout(grille, mvt_possible, chemin + [next_pos])
                 elif moteur.victoire(chemin + [next_pos], grille):
-                    moteur.sauvegarde_partie(chemin + [next_pos], map, 9, regle)
+                    moteur.sauvegarde_partie(chemin + [next_pos], map, sauvegarde, regle)
                     return chemin + [next_pos]
                 visite.add((tuple(next_pos), tuple(vitesse)))
                 pile.append((chemin + [next_pos], affichage.list_add2(chemin[-1], next_pos)))
     return None
 
-def solveur_random(grille, chemin, visite, map, regle, affiche):
+def solveur_random(grille, chemin, visite, map, regle, affiche, sauvegarde):
     if len(chemin) < 2:
         vitesse = (0, 0)
     else:
@@ -56,15 +56,15 @@ def solveur_random(grille, chemin, visite, map, regle, affiche):
             if affiche:
                 affichage.affiche_tout(grille, mvt_possible, chemin + [next_pos])
             elif moteur.victoire(chemin + [next_pos], grille):
-                moteur.sauvegarde_partie(chemin + [next_pos], map, 9, regle)
+                moteur.sauvegarde_partie(chemin + [next_pos], map, sauvegarde, regle)
                 return chemin + [next_pos]
             visite.add((tuple(next_pos), tuple(vitesse)))         
-            result = solveur_random(grille, chemin + [next_pos], visite, map, regle, affiche)
+            result = solveur_random(grille, chemin + [next_pos], visite, map, regle, affiche, sauvegarde)
             if result is not None:
                 return result
     return None
 
-def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche):
+def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche, sauvegarde):
     pile_depart = collections.deque()
     pile_arrivee = collections.deque()
     
@@ -84,7 +84,7 @@ def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche):
         for next_pos in mvt_possible_depart:
             if (tuple(next_pos), tuple(vitesse_depart)) not in visite_depart:
                 if tuple(next_pos) in visite_arrivee:
-                    moteur.sauvegarde_partie(chemin_depart + chemin_arrivee[::-1], map, 9, regle)
+                    moteur.sauvegarde_partie(chemin_depart + chemin_arrivee[::-1], map, sauvegarde, regle)
                     return chemin_depart + chemin_arrivee[::-1]
                 visite_depart.add((tuple(next_pos), tuple(vitesse_depart)))
                 pile_depart.append((chemin_depart + [next_pos], affichage.list_add2(chemin_depart[-1], next_pos)))
@@ -92,7 +92,7 @@ def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche):
         for next_pos in mvt_possible_arrivee:
             if (tuple(next_pos), tuple(vitesse_arrivee)) not in visite_arrivee:
                 if tuple(next_pos) in visite_depart:
-                    moteur.sauvegarde_partie(chemin_arrivee + chemin_depart[::-1], map, 9, regle)
+                    moteur.sauvegarde_partie(chemin_arrivee + chemin_depart[::-1], map, sauvegarde, regle)
                     return chemin_arrivee + chemin_depart[::-1]
                 visite_arrivee.add((tuple(next_pos), tuple(vitesse_arrivee)))
                 pile_arrivee.append((chemin_arrivee + [next_pos], affichage.list_add2(chemin_arrivee[-1], next_pos)))
@@ -104,12 +104,14 @@ def solveur(choix, map, regle, affiche, sauvegarde):
     pos_arrivee = moteur.trouver_arrivee(grille)
     visite = set()
     if choix == "Profondeur":
-        return solveur_profondeur(grille, [pos_depart], visite, map, regle, affiche[0])
+        return solveur_profondeur(grille, [pos_depart], visite, map, regle, affiche[0], sauvegarde)
     elif choix == "Largeur":
-        return solveur_largeur(grille, visite, map, regle, affiche[0])
+        return solveur_largeur(grille, visite, map, regle, affiche[0], sauvegarde)
     elif choix == "Random":
-        return solveur_random(grille, [pos_depart], visite, map, regle, affiche[0])
+        return solveur_random(grille, [pos_depart], visite, map, regle, affiche[0], sauvegarde)
     elif choix == "Bidirectionnel":
-        return solveur_bidirectionnel(grille, pos_depart, pos_arrivee, map, regle, affiche[0])
+        return solveur_bidirectionnel(grille, pos_depart, pos_arrivee, map, regle, affiche[0], sauvegarde)
     else:
         return None
+    
+sys.setrecursionlimit(10000)
