@@ -1,51 +1,6 @@
 import fltk
-import sys
 import time
-
-def posactuelle(pos_parcouru):
-    return pos_parcouru[-1]
-
-def list_add(a, b):
-    result = []
-    for i in range(len(a)):
-        result.append(a[i] + b[i])
-    return result
-
-def list_add2(a, b):
-    result = []
-    for i in range(len(a)):
-        result.append(a[i] - b[i])
-    return result
-
-def choixsauvegarde(Relance): 
-    nom_sauvegarde = ""
-    affiche_fenetre_sauvegarde(nom_sauvegarde, Relance)
-    ev = fltk.attend_ev()
-    nom_touche, nom_sauvegarde = veriftouche(ev, nom_sauvegarde)
-    while nom_touche != "Return":
-        affiche_fenetre_sauvegarde(nom_sauvegarde, Relance)
-        ev = fltk.attend_ev()
-        nom_touche, nom_sauvegarde = veriftouche(ev, nom_sauvegarde)
-    fltk.efface("sauvegarde")
-    return nom_sauvegarde
-
-def veriftouche(ev, nom_sauvegarde):
-    if type(ev) == "Quitte":
-            sys.exit
-    else:
-        nom_touche = fltk.touche(ev)
-        if nom_touche == "Return":
-            return nom_touche, nom_sauvegarde
-        if nom_touche == "BackSpace":
-            nom_sauvegarde = nom_sauvegarde[:-1]
-            return nom_touche, nom_sauvegarde
-        if len(nom_touche) <= 1:
-            return nom_touche, nom_sauvegarde + nom_touche
-        else:
-            return "", nom_sauvegarde
-
-        
-
+import grillage
 
 def affiche_fenetre_sauvegarde(nom_sauvegarde, Relance):
     MillieuFenetreX = fltk.largeur_fenetre() //2
@@ -100,7 +55,7 @@ def affiche_boutons(liste_boutons, taille_texte):
         du coté des boutons en fonction de la taille de la fenetre fltk.
     """
     fltk.efface_tout()
-    fltk.image(0,0, "fond_menu.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"nw",)
+    fltk.image(0,0, "images/fond_menu.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"nw",)
     for boutons in liste_boutons:
         aX, aY = boutons[0], boutons[1]
         bX, bY = boutons[2], boutons[3]
@@ -173,14 +128,14 @@ def affiche_trace(posparcouru, plateau):
     for i in range(len(posparcouru)-1):
         x, y = posparcouru[i][0] * largeur_case, posparcouru[i][1] * hauteur_case
         x2, y2 = posparcouru[i+1][0] * largeur_case, posparcouru[i+1][1] * hauteur_case
-        variable = max(list_add2([posparcouru[i+1][0],posparcouru[i+1][1]],[posparcouru[i][0],posparcouru[i][1]]))
+        variable = max(grillage.list_soustraction([posparcouru[i+1][0],posparcouru[i+1][1]],[posparcouru[i][0],posparcouru[i][1]]))
         if variable < 0:
             variable = -(variable)
         couleur = couleurs[variable]
         fltk.ligne(x, y, x2, y2, couleur, 3)
 
 def affiche_tout(plateau, mvtpossible, posparcouru):
-    pos_actuelle = posactuelle(posparcouru)
+    pos_actuelle = grillage.posactuelle(posparcouru)
     fltk.efface_tout()
     affichage_plateau(plateau)
     affichage_trait(plateau)
@@ -199,14 +154,14 @@ def affiche_depart(plateau, mvtpossible):
 def affichevictoire():
     time.sleep(2)
     fltk.efface_tout()
-    fltk.image(0,0, "victoire.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
+    fltk.image(0,0, "images/victoire.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
     fltk.texte(fltk.largeur_fenetre()//2, fltk.hauteur_fenetre()//2,"Victoire", "Black", "c")
     fltk.mise_a_jour()
     time.sleep(3)
 def affichedefaite():
     time.sleep(2)
     fltk.efface_tout()
-    fltk.image(0,0, "defaite.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
+    fltk.image(0,0, "images/defaite.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
     fltk.texte(fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"Défaite", "Black", "c")
     fltk.mise_a_jour()
     time.sleep(3)

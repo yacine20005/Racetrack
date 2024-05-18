@@ -128,4 +128,3 @@ def initialiseboutonsmenu(phase, map, Choix, regle, solveur, affichage):
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
                                         MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "  Retour  "]]
         return liste_boutons
-
