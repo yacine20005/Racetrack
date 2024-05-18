@@ -5,7 +5,7 @@ import sys
 import collections
 import random
 
-def solveur_profondeur(grille, chemin, visite, map, regle, affiche=False):
+def solveur_profondeur(grille, chemin, visite, map, regle, affiche):
     if len(chemin) < 2:
         vitesse = (0, 0)
     else:
@@ -20,12 +20,12 @@ def solveur_profondeur(grille, chemin, visite, map, regle, affiche=False):
                 moteur.sauvegarde_partie(chemin + [next_pos], map, 9, regle)
                 return chemin + [next_pos]
             visite.add((tuple(next_pos), tuple(vitesse)))         
-            result = solveur_profondeur(grille, chemin + [next_pos], visite, map, affiche)
+            result = solveur_profondeur(grille, chemin + [next_pos], visite, map, regle, affiche)
             if result is not None:
                 return result
     return None
 
-def solveur_largeur(grille, visite, map, regle, affiche=False):
+def solveur_largeur(grille, visite, map, regle, affiche):
     pile = collections.deque()
     pion, pos_depart=moteur.miseenplacepion(grille)
     pile.append(([pos_depart], (0, 0)))
@@ -43,7 +43,7 @@ def solveur_largeur(grille, visite, map, regle, affiche=False):
                 pile.append((chemin + [next_pos], affichage.list_add2(chemin[-1], next_pos)))
     return None
 
-def solveur_random(grille, chemin, visite, map, regle, affiche=False):
+def solveur_random(grille, chemin, visite, map, regle, affiche):
     if len(chemin) < 2:
         vitesse = (0, 0)
     else:
@@ -59,12 +59,12 @@ def solveur_random(grille, chemin, visite, map, regle, affiche=False):
                 moteur.sauvegarde_partie(chemin + [next_pos], map, 9, regle)
                 return chemin + [next_pos]
             visite.add((tuple(next_pos), tuple(vitesse)))         
-            result = solveur_random(grille, chemin + [next_pos], visite, map, affiche)
+            result = solveur_random(grille, chemin + [next_pos], visite, map, regle, affiche)
             if result is not None:
                 return result
     return None
 
-def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche=False):
+def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche):
     pile_depart = collections.deque()
     pile_arrivee = collections.deque()
     
@@ -98,22 +98,22 @@ def solveur_bidirectionnel(grille, depart, arrivee, map, regle, affiche=False):
                 pile_arrivee.append((chemin_arrivee + [next_pos], affichage.list_add2(chemin_arrivee[-1], next_pos)))
     return None
 
-def solveur(choix, map, regle, affiche=False):
+def solveur(choix, map, regle, affiche, sauvegarde):
     grille=moteur.conversion_txt(map)
     pion, pos_depart = moteur.miseenplacepion(grille)
     pos_arrivee = moteur.trouver_arrivee(grille)
     visite = set()
     if choix == "Profondeur":
-        return solveur_profondeur(grille, [pos_depart], visite, map, regle, affiche)
+        return solveur_profondeur(grille, [pos_depart], visite, map, regle, affiche[0])
     elif choix == "Largeur":
-        return solveur_largeur(grille, visite, map, regle, affiche)
+        return solveur_largeur(grille, visite, map, regle, affiche[0])
     elif choix == "Random":
-        return solveur_random(grille, [pos_depart], visite, map, regle, affiche)
+        return solveur_random(grille, [pos_depart], visite, map, regle, affiche[0])
     elif choix == "Bidirectionnel":
-        return solveur_bidirectionnel(grille, pos_depart, pos_arrivee, map, regle, affiche)
+        return solveur_bidirectionnel(grille, pos_depart, pos_arrivee, map, regle, affiche[0])
     else:
         return None
     
-fltk.cree_fenetre(800,800)
+"""fltk.cree_fenetre(800,800)
 sys.setrecursionlimit(10000)
-solveur("Bidirectionnel", "map2.txt", "souple", False)
+solveur("Bidirectionnel", "map2.txt", "souple", False)"""

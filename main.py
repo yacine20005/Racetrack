@@ -2,6 +2,7 @@ import fltk
 import moteur
 import affichage
 import sys
+import time
 
 
 def main(map, charge, regle):
@@ -55,6 +56,8 @@ def main(map, charge, regle):
         if tev == "Quitte":
             sys.exit()
     if moteur.victoire(pos_parcouru, plateau) is True:
-        print("Victoire")
-    if moteur.defaite(mvtpossible) is True:
-        print("Perdu")
+        affichage.affichevictoire()
+    elif moteur.defaite(mvtpossible) is True:
+        affichage.affichedefaite()
+    fltk.mise_a_jour()
+    time.sleep(5)

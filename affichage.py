@@ -195,3 +195,8 @@ def affiche_depart(plateau, mvtpossible):
     affiche_possibilite(plateau, mvtpossible)
     fltk.mise_a_jour()
 
+def affichevictoire():
+    pass
+
+def affichedefaite():
+    pass

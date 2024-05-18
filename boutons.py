@@ -1,12 +1,12 @@
 import fltk
 
-def initialiseboutonsmenu(phase, map, Choix, regle):
+def initialiseboutonsmenu(phase, map, Choix, regle, solveur, affichage):
         MillieufenetreX = fltk.largeur_fenetre()//2
         MillieufenetreY = fltk.hauteur_fenetre()//2
         liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
                                 MillieufenetreY - fltk.hauteur_fenetre()//12,
                                 MillieufenetreX + fltk.largeur_fenetre()//6, 
-                                MillieufenetreY + fltk.hauteur_fenetre()//12, "Regles"], 
+                                MillieufenetreY + fltk.hauteur_fenetre()//12, "Solveur"], 
                         [MillieufenetreX - fltk.largeur_fenetre()//6, 
                                 MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
                                 MillieufenetreX + fltk.largeur_fenetre()//6, 
@@ -41,11 +41,56 @@ def initialiseboutonsmenu(phase, map, Choix, regle):
                                         MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
                                         MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), " Retour "]]
-        elif phase == "Regles":
+        elif phase == "Solveur":
                 liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
                                         MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
                                         MillieufenetreX + fltk.largeur_fenetre()//6, 
-                                        MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "Retour"]]
+                                        MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "Retour"],
+                                [MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY - fltk.hauteur_fenetre()//12,
+                                        MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//12, "  Options  "],
+                                [MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "Résoudre"]]
+        elif phase == "  Options  ":
+                liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY + 2 *(fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX + fltk.largeur_fenetre()//6, 
+                                        MillieufenetreY + 4 *(fltk.hauteur_fenetre()//12), "      Retour      "],
+                                [MillieufenetreX - fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY - fltk.hauteur_fenetre()//12,
+                                        MillieufenetreX - fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//12, "Choix de la map"],
+                                [MillieufenetreX - fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//12,
+                                        MillieufenetreX - fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//8, map[0]],
+                                [MillieufenetreX - fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX - fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "Règle"],
+                                [MillieufenetreX - fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX - fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY - int(1.5*(fltk.hauteur_fenetre()//12)), regle[0]],
+                                [MillieufenetreX + fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY - 4*(fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX + fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12), "Affichage"],
+                                [MillieufenetreX + fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY - 2 * (fltk.hauteur_fenetre()//12),
+                                        MillieufenetreX + fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY - int(1.5*(fltk.hauteur_fenetre()//12)), affichage[0]],
+                                [MillieufenetreX + fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY - fltk.hauteur_fenetre()//12,
+                                        MillieufenetreX + fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//12, "Choix du solveur"],
+                                [MillieufenetreX + fltk.largeur_fenetre()//3, 
+                                        MillieufenetreY + fltk.largeur_fenetre()//12,
+                                        MillieufenetreX + fltk.largeur_fenetre()//12, 
+                                        MillieufenetreY + fltk.hauteur_fenetre()//8, solveur[0]]]
         elif phase == "Charger":
 
                 liste_boutons = [[MillieufenetreX - fltk.largeur_fenetre()//6, 
