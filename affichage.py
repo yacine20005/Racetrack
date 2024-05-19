@@ -235,12 +235,12 @@ def affichevictoire():
     Returns:
         Aucun.
     """
-    time.sleep(2)
+    time.sleep(1)
     fltk.efface_tout()
     fltk.image(0,0, "images/victoire.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
     fltk.texte(fltk.largeur_fenetre()//2, fltk.hauteur_fenetre()//2,"Victoire", "Black", "c")
     fltk.mise_a_jour()
-    time.sleep(3)
+    time.sleep(2)
 
 def affichedefaite():
     """Affiche l'écran de défaite.
@@ -256,9 +256,9 @@ def affichedefaite():
     Raises:
         Aucun.
     """
-    time.sleep(2)
+    time.sleep(1)
     fltk.efface_tout()
     fltk.image(0,0, "images/defaite.png", fltk.largeur_fenetre(), fltk.hauteur_fenetre(), ancrage = 'nw')
-    fltk.texte(fltk.largeur_fenetre(), fltk.hauteur_fenetre(),"Défaite", "Black", "c")
+    fltk.texte(fltk.largeur_fenetre()//2, fltk.hauteur_fenetre()//2,"Défaite", "Black", "c")
     fltk.mise_a_jour()
-    time.sleep(3)
+    time.sleep(2)
