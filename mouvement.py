@@ -72,23 +72,23 @@ def distance_centre(x1, y1, x2, y2, xc, yc):
         yc (float): Coordonnée y du point pour lequel la distance doit être calculée.
     
     Returns:
-        float: La distance entre le point (xc, yc) et le segment de droite défini par 
-        les points (x1, y1) et (x2, y2).
+        float: La distance entre le point (xc, yc) et le segment de droite défini par les points (x1, y1) et (x2, y2).
     """
     # Calculer la longueur au carré du segment de droite
     longueursegmentcarre = (x2 - x1) ** 2 + (y2 - y1) ** 2
-    # Si la longueur du segment de droite est nulle, retourner la distance
-    # entre le point et le premier point du segment
+    
+    # Si la longueur du segment de droite est nulle, retourner la distance entre le point et le premier point du segment
     if longueursegmentcarre == 0:
         return math.sqrt((xc - x1)**2 + (yc - y1)**2)
-    # Calculer le paramètre t, qui représente la position du point le plus
-    # proche sur le segment de droite par rapport au point (xc, yc)
+    
+    # Calculer le paramètre t, qui représente la position du point le plus proche sur le segment de droite par rapport au point (xc, yc)
     t = max(0, min(1, ((xc - x1) * (x2 - x1) + (yc - y1) * (y2 - y1)) / longueursegmentcarre))
+    
     # Calculer les coordonnées du point le plus proche sur le segment de droite
     x_proche = x1 + t * (x2 - x1)
     y_proche = y1 + t * (y2 - y1)
-    # Calculer la distance entre le point (xc, yc) et le point le plus proche
-    # sur le segment de droite
+    
+    # Calculer la distance entre le point (xc, yc) et le point le plus proche sur le segment de droite
     return math.sqrt((x_proche - xc) ** 2 + (y_proche - yc) ** 2)
 
 def intersection_cercle(x1, y1, x2, y2, xc, yc, r):
