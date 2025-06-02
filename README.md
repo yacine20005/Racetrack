@@ -1,43 +1,81 @@
-# Projet-AP2
+# Racetrack
 
-## Structure du projet
+Racetrack is a Python-based game where players navigate a pawn across a board, avoiding obstacles and aiming to reach the finish line. The game features several play modes and a solver that can automatically complete levels using different algorithms.
 
-Le projet est structuré comme suit :
+---
 
-### Description des fichiers
+## Table of Contents
 
-- `affichage.py` : Ce fichier gère l'affichage du jeu.
-- `boutons.py` : Ce fichier contient le code pour les boutons du jeu.
-- `conversion.py` : Ce fichier est utilisé pour la conversion des données du jeu.
-- `fltk.py` : Ce fichier contient le code pour l'interface utilisateur du jeu.
-- `grillage.py` : Ce fichier gère le grillage du jeu.
-- `jeu.py` : Ce fichier contient la logique principale du jeu.
-- `main.py` : C'est le point d'entrée du jeu.
-- `menu.py` : Ce fichier gère le menu du jeu.
-- `mouvement.py` : Ce fichier gère les mouvements dans le jeu.
-- `sauvegarde.py` : Ce fichier gère la sauvegarde du jeu.
-- `solveur.py` : Ce fichier contient le code pour le solveur du jeu.
-- `utilitaire.py` : Ce fichier contient des fonctions utilitaires pour le jeu.
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Game Rules](#game-rules)
+- [Game Modes](#game-modes)
+- [Dependencies](#dependencies)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Comment exécuter le projet
+---
 
-Pour exécuter le projet, utilisez la commande suivante dans votre terminal :
+## Project Structure
+
+The codebase is organized into the following files:
+
+- **`main.py`**: Entry point of the game.
+- **`affichage.py`**: Handles game display and rendering.
+- **`boutons.py`**: Manages game buttons.
+- **`conversion.py`**: Handles data conversion for the game.
+- **`fltk.py`**: Manages the graphical user interface components.
+- **`grillage.py`**: Handles the game grid.
+- **`jeu.py`**: Core game logic.
+- **`menu.py`**: Manages the game menu.
+- **`mouvement.py`**: Controls pawn movement.
+- **`sauvegarde.py`**: Manages saving and loading games.
+- **`solveur.py`**: Contains algorithms for solving levels automatically.
+- **`utilitaire.py`**: Utility functions for various game features.
+
+---
+
+## Getting Started
+
+To run the project, ensure you have Python 3.x installed. Then, execute the following command in your terminal:
+
+```bash
 python main.py
+```
 
-## Règles du jeu
+---
 
-Le jeu consiste à déplacer un pion sur un plateau de jeu en évitant les obstacles et en atteignant la case d'arrivée. Le pion peut se déplacer dans les huit directions (haut, bas, gauche, droite et les quatre diagonales). Le jeu propose deux modes de règles : "souple" et "strict". Dans le mode "souple", le pion peut se déplacer librement tant qu'il ne rencontre pas d'obstacle. Dans le mode "strict", le pion doit éviter les obstacles en respectant certaines contraintes de mouvement.
+## Game Rules
 
-## Modes de jeu
+- Move your pawn across the board while avoiding obstacles.
+- The goal is to reach the finish square.
+- You can move in eight directions (up, down, left, right, and diagonals).
+- Use strategy to avoid traps and reach the end as efficiently as possible.
 
-Le jeu propose plusieurs modes de jeu :
-- Mode "Jouer" : Permet de jouer une nouvelle partie ou de charger une partie sauvegardée.
-- Mode "Solveur" : Permet de résoudre automatiquement une partie en utilisant différents algorithmes de résolution (Profondeur, Largeur, Random, Bidirectionnel).
-- Mode "Options" : Permet de configurer les options du jeu (choix de la carte, règle du jeu, affichage, choix du solveur).
+---
 
-## Dépendances
+## Game Modes
 
-Le projet nécessite les dépendances suivantes pour fonctionner :
+Racetrack offers several modes:
+
+- **Play Mode**: Start a new game or load a previously saved game.
+- **Solver Mode**: Let the game solve a level automatically using various algorithms (Depth-First Search, Breadth-First Search, Random, Bidirectional).
+- **Options Mode**: Configure the game (choose map, rules, display options, solver selection).
+
+---
+
+## Dependencies
+
+Before running Racetrack, make sure the following dependencies are installed:
+
 - Python 3.x
-- Tkinter (inclus avec Python)
-- PIL (Python Imaging Library) pour la gestion des images
+- Tkinter (usually included with Python)
+- PIL / Pillow (Python Imaging Library) for image handling
+
+You can install Pillow using pip:
+
+```bash
+pip install Pillow
+```
+
+---
